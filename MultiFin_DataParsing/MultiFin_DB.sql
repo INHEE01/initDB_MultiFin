@@ -53,7 +53,7 @@ INSERT INTO MEMBER (
 
 COMMIT;
 
-SELECT * FROM SPRING.MEMBER;
+SELECT * FROM MEMBER;
 
 -------------------------------------------------
 --------------- Board 관련 테이블 ------------------
@@ -192,11 +192,11 @@ create table StockPrice (
     
     primary key (sno)
 );
-select * from stockprice;
-select * from stockprice where itmsNm='헝셩그룹';
-select count(*) from stockprice;
+-- select * from stockprice;
+-- select * from stockprice where itmsNm='헝셩그룹';
+-- select count(*) from stockprice;
 
-select * from stockprice where srtnCd='DZ609';
+-- select * from stockprice where srtnCd='DZ609';
 
 -- [증권] 금융위원회_주식 배당 정보
 -- drop table stockdiviinfo;
@@ -228,7 +228,7 @@ create table Stockdiviinfo (
     
     foreign key (sno) references stockprice(sno)
 );
-select * from stockdiviinfo;
+-- select * from stockdiviinfo;
 
 -- 금융위원회_주식 발행 정보
 -- drop table stockissustat;
@@ -243,7 +243,7 @@ create table StocIssuStat (
     
     foreign key (sno) references stockprice(sno)
 );
-select * from StocIssuStat;
+-- select * from StocIssuStat;
 
 -- 금융위원회_펀드상품기본정보
 -- drop table FundProductInfo;
@@ -258,11 +258,7 @@ create table FundProductInfo(
 	prdClsfCd varchar(30), -- 상품분류코드
 	asoStdCd varchar(30) -- 협회표준코드
 );
-select * from fundProductInfo;
-		SELECT 
-		COUNT(DISTINCT F.FPINO) 
-		FROM FUNDPRODUCTINFO F
-        WHERE FNDTP='주식형';
+-- select * from fundProductInfo;
 
 CREATE TABLE stockPriceIndex(
    stock_type VARCHAR(1000), -- 타입
@@ -598,7 +594,7 @@ VALUES ('https://gongsi.crefia.or.kr/assets/portal/images/content/card-logo-sams
 CGV 3,000원 현장할인 또는 캐시백<br>
 놀이공원 자유이용권 50%ㆍ워터파크 입장권 30% 현장할인', 'https://www.samsungcard.com/personal/card/cardfinder/UHPPCA0102M0.jsp?code=ABP1383');  
   INSERT INTO CREDITCARD(COMPANY_IMG, COMPANY_NM, PRODUCT_IMG, PRODUCT_NM, PRODUCT_CHAR, KEY_BENEFIT, DETAIL_URL)
-VALUES ('https://gongsi.crefia.or.kr/common/imageView?fileName=Deep_Dream[20171117151833114].jpg&fileType=carddamoa', '신한카드', 'https://gongsi.crefia.or.kr/common/imageView?fileName=Deep_Dream_%EC%B2%B4%ED%81%AC[20171117180406143].jpg&fileType=carddamoa', '신한카드 Deep Dream 체크', '한도없이 0.2% 적립, 많이 쓴 곳 5배 자동 적립 체크', '전월실적 제한 및 적립한도 없이 기본 0.2% 적립<br>
+VALUES ('https://gongsi.crefia.or.kr/assets/portal/images/content/card-logo-shinhan.jpg', '신한카드', 'https://gongsi.crefia.or.kr/common/imageView?fileName=Deep_Dream_%EC%B2%B4%ED%81%AC[20171117180406143].jpg&fileType=carddamoa', '신한카드 Deep Dream 체크', '한도없이 0.2% 적립, 많이 쓴 곳 5배 자동 적립 체크', '전월실적 제한 및 적립한도 없이 기본 0.2% 적립<br>
 자주가는 DREAM 영역 기본의 3배(0.6%) 적립<br>
 가장 많이 쓴 DREAM 영역 기본의 5배(1.0%) 자동 적립', 'https://www.shinhancard.com/conts/person/card_info/rookie/benefit/large/1463216_13353.jsp');  
   INSERT INTO CREDITCARD(COMPANY_IMG, COMPANY_NM, PRODUCT_IMG, PRODUCT_NM, PRODUCT_CHAR, KEY_BENEFIT, DETAIL_URL)
@@ -727,7 +723,7 @@ select * from apthousetype as aht, aptrate as ar where aht.house_manage_no=ar.ho
 
 -- 오피스텔/도시형/민간임대 분양정보/경쟁률 조회
 create table OfficeRate (
-	officeRateNo int auto_increment, 
+	officeRateNo int primary key auto_increment, 
 	house_manage_no int, -- 주택관리번호	
 	pblanc_no int, -- 공고번호
 
@@ -741,7 +737,7 @@ create table OfficeRate (
 
 -- 오피스텔/도시형/민간임대 분양정보 주택형별 상세조회
 create table OfficeHouseType (
-	officeHouseNo int auto_increment, 
+	officeHouseNo int primary key auto_increment, 
 	excluse_ar decimal(5, 2), -- 전용면적
 	gp char(1), -- 군
 	house_manage_no int, -- 주택관리번호
@@ -754,7 +750,7 @@ create table OfficeHouseType (
 
 -- 공공지원 민간임대 분양정보/경쟁률 조회
 create table PublicRate (
-	pubNo int auto_increment, 
+	pubNo int primary key auto_increment, 
 
 	house_manage_no int, -- 주택관리번호
 	pblanc_no int, -- 공고번호
@@ -768,7 +764,7 @@ create table PublicRate (
 
 -- APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세
 create table RemainHouseType (
-	remainHouseNo int auto_increment, 
+	remainHouseNo int primary key auto_increment, 
 	house_manage_no int, -- 주택관리번호
 
 	house_ty varchar(10), -- 모델타입
@@ -779,7 +775,7 @@ create table RemainHouseType (
 
 -- APT 무순위/잔여세대 분양정보 상세조회
 create table RemainDetail (
-	remainNo int auto_increment, 
+	remainNo int primary key auto_increment, 
 
 	bsns_mby_nm varchar(20), -- 사업주체명 (시행사)
 	cntrct_cncls_bgnde DATETIME, -- 계약시작일
@@ -812,7 +808,7 @@ create table RemainDetail (
 drop table investSimul; 
 create table INVESTSIMUL (
 	NO int,
-    ordernum int auto_increment,
+    ordernum int primary key auto_increment,
     orderdt DATETIME DEFAULT CURRENT_TIMESTAMP,
     stockcode varchar(10),
     stock varchar(30),
@@ -898,6 +894,7 @@ SELECT * FROM lawfirm;
 
 -- 뉴스
 create table news (
+	newsNo int primary key auto_increment, 
 	title varchar(50), 
 	originallink varchar(255),
 	link varchar(255),
