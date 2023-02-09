@@ -10,18 +10,17 @@ public class StockDiviInfoController {
 	private StockDiviInfoService stockDiviInfoService = new StockDiviInfoService();
 	// BankDeposit 테이블 초기화
 	public void initStockDiviInfo() {
-		
-			
-			List<StockDiviInfo> list = StockDiviInfoAPI.getStockDiviInfo();
-			
-			if (list == null || list.isEmpty()) {
-				continue;
-			}
-			// 가져온 데이터를 DB에 저장
-			for (StockDiviInfo sp : list) {
-				stockDiviInfoService.insert(sp);
-			}
-		
+//		
+//			
+//			List<StockDiviInfo> list = StockDiviInfoAPI.getStockDiviInfo();
+//			
+//			if (list == null || list.isEmpty()) {
+//				continue;
+//			}
+//			// 가져온 데이터를 DB에 저장
+//			for (StockDiviInfo sp : list) {
+//				stockDiviInfoService.insert(sp);
+//			}
 		
 	}
 	

@@ -2,6 +2,153 @@ create schema multifindb;
 -- drop schema multifindb;
 use multifindb;
 
+------------------------------------------------
+--------------- MEMBER 관련 테이블 ------------------
+------------------------------------------------
+
+CREATE TABLE MEMBER (
+    mNo      INT  PRIMARY KEY AUTO_INCREMENT,
+    ID 		 VARCHAR(30) NOT NULL UNIQUE,
+    PASSWORD VARCHAR(100) NOT NULL,
+    ROLE 	 VARCHAR(10) DEFAULT 'ROLE_USER',
+    NAME 	 VARCHAR(15) NOT NULL,
+    PHONE 	 VARCHAR(13),
+    EMAIL 	 VARCHAR(100),
+    ADDRESS  VARCHAR(100),
+    HOBBY 	 VARCHAR(100),
+    STATUS 	 VARCHAR(1) DEFAULT 'Y' CHECK(STATUS IN('Y', 'N')),
+    ENROLL_DATE DATETIME  DEFAULT CURRENT_TIMESTAMP,
+    MODIFY_DATE DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+INSERT INTO MEMBER (
+    mNo, 
+    ID, 
+    PASSWORD, 
+    ROLE,
+    NAME, 
+    PHONE, 
+    EMAIL, 
+    ADDRESS, 
+    HOBBY, 
+    STATUS, 
+    ENROLL_DATE, 
+    MODIFY_DATE
+) VALUES(
+    0, 
+    'admin', 
+    '1234', 
+    'ROLE_ADMIN', 
+    '관리자', 
+    '010-1234-4341', 
+    'admin@test.com', 
+    '서울시 강남구 역삼동',
+    DEFAULT,
+    DEFAULT,
+    DEFAULT,
+    DEFAULT
+);
+
+COMMIT;
+
+SELECT * FROM SPRING.MEMBER;
+
+-------------------------------------------------
+--------------- Board 관련 테이블 ------------------
+-------------------------------------------------
+
+
+CREATE TABLE BOARD (	
+    bNo INT PRIMARY KEY AUTO_INCREMENT,
+    mNo INT, 
+	TITLE VARCHAR(1000), 
+	CONTENT VARCHAR(2000), 
+	TYPE VARCHAR(100), 
+	ORIGINAL_FILENAME VARCHAR(100), 
+	RENAMED_FILENAME VARCHAR(100), 
+	READCOUNT INT DEFAULT 0, 
+    STATUS VARCHAR(1) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N')),
+    CREATE_DATE DATETIME  DEFAULT CURRENT_TIMESTAMP, 
+    MODIFY_DATE DATETIME  DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_BOARD_WRITER FOREIGN KEY(mNo) REFERENCES MEMBER(mNo) ON DELETE SET NULL
+);
+
+
+INSERT INTO BOARD VALUES(0, 1, '[판매] 애플 노트북 팔아요.',  '노트북 맥북 최신입니다. 게임하시면 안됩니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 삼성 노트북 팔아요.',  '삼성 노트북 팝니다. 터치 됩니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 아이폰 팔아요.',  '아이폰13 팝니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 갤럭시 팔아요.',  '갤럭시 플립3 팝니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 애플 노트북 삽니다.',  '맥북 게임용으로 삽니다. 이거 게임 잘돌아가나요?', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 삼성 노트북 삽니다.',  '삼성 노트북 삽니다. 아이폰 개발하려 삽니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 아이폰 삽니다.',  '아이폰3사요. 30만원에 네고합니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 갤럭시 삽니다.',  '갤럭시 삽니다. 아무 기종이나 상관없어요. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 애플 노트북 팔아요.',  '노트북 맥북 최신입니다. 게임하시면 안됩니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 삼성 노트북 팔아요.',  '삼성 노트북 팝니다. 터치 됩니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 아이폰 팔아요.',  '아이폰13 팝니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 갤럭시 팔아요.',  '갤럭시 플립3 팝니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 애플 노트북 삽니다.',  '맥북 게임용으로 삽니다. 이거 게임 잘돌아가나요?', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 삼성 노트북 삽니다.',  '삼성 노트북 삽니다. 아이폰 개발하려 삽니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 아이폰 삽니다.',  '아이폰3사요. 30만원에 네고합니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 갤럭시 삽니다.',  '갤럭시 삽니다. 아무 기종이나 상관없어요. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 애플 노트북 팔아요.',  '노트북 맥북 최신입니다. 게임하시면 안됩니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 삼성 노트북 팔아요.',  '삼성 노트북 팝니다. 터치 됩니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 아이폰 팔아요.',  '아이폰13 팝니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[판매] 갤럭시 팔아요.',  '갤럭시 플립3 팝니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 애플 노트북 삽니다.',  '맥북 게임용으로 삽니다. 이거 게임 잘돌아가나요?', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 삼성 노트북 삽니다.',  '삼성 노트북 삽니다. 아이폰 개발하려 삽니다.', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 아이폰 삽니다.',  '아이폰3사요. 30만원에 네고합니다. ', 'B1', '원본파일명.txt', '변경된파일명.txt', DEFAULT, 'Y', DEFAULT, DEFAULT);
+INSERT INTO BOARD VALUES(0, 1, '[구매] 갤럭시 삽니다.',  '갤럭시 삽니다. 아무 기종이나 상관없어요. ', 'B1', null, null, DEFAULT, 'Y', DEFAULT, DEFAULT);
+
+
+
+COMMIT;
+SELECT * FROM BOARD;
+
+------------------------------------------------------------------
+------------------------- REPLY 관련 테이블 -------------------------
+------------------------------------------------------------------
+
+
+CREATE TABLE REPLY(
+  rNo INT PRIMARY KEY AUTO_INCREMENT,
+  bNo INT,
+  mNo INT,
+  CONTENT VARCHAR(1000),
+  STATUS VARCHAR(1) DEFAULT 'Y' CHECK (STATUS IN ('Y', 'N')),
+  CREATE_DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
+  MODIFY_DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (bNo) REFERENCES BOARD(bNo),
+  FOREIGN KEY (mNo) REFERENCES MEMBER(mNo)
+);
+
+
+
+INSERT INTO REPLY VALUES(0, 1, 1, '안녕하세요.', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 1, 1, '반갑습니다.', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 1, 1, '아이폰 좋나요?', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 1, 1, '갤럭시 좋나요?', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 2, 1, '안녕하세요.', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 2, 1, '반갑습니다.', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 2, 1, '아이폰 좋나요?', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 2, 1, '갤럭시 좋나요?', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 3, 1, '안녕하세요.', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 3, 1, '반갑습니다.', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 3, 1, '아이폰 좋나요?', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO REPLY VALUES(0, 3, 1, '갤럭시 좋나요?', DEFAULT, DEFAULT, DEFAULT);
+
+
+COMMIT;
+
+SELECT * FROM REPLY;
+
+
+-- -----------------------------
+-- 	증권 정보 --------------------
+-- -----------------------------
+
+
 -- 환율 정보 (환율 확인할 때 필요)
 -- drop table exchangeRate;
 create table exchangeRate(
@@ -49,9 +196,13 @@ select * from stockprice;
 select * from stockprice where itmsNm='헝셩그룹';
 select count(*) from stockprice;
 
+select * from stockprice where srtnCd='DZ609';
+
 -- [증권] 금융위원회_주식 배당 정보
+-- drop table stockdiviinfo;
 create table Stockdiviinfo (
-	sdno int, 
+	sdno int primary key auto_increment, -- 일련번호 
+    sno int,
 	basDt Date, 
     cashDvdnPayDt Date,
     cashGrdnDvdnRt varchar(100),
@@ -73,23 +224,31 @@ create table Stockdiviinfo (
     stckParPrc varchar(100),
     stckStacMd varchar(100),
     trsnmDptyDcd varchar(100),
-    trsnmDptyDcdNm varchar(100)
+    trsnmDptyDcdNm varchar(100),
+    
+    foreign key (sno) references stockprice(sno)
 );
+select * from stockdiviinfo;
 
 -- 금융위원회_주식 발행 정보
+-- drop table stockissustat;
 create table StocIssuStat (
-	sisno int,
+	sisno int primary key auto_increment, -- 일련번호
+    sno int,
     basDt DATETIME,
     crno bigint,
     onskTisuCnt bigint,
     pfstTisuCnt int, 
-    stckIssuCmpyNm varchar(100)
+    stckIssuCmpyNm varchar(100),
+    
+    foreign key (sno) references stockprice(sno)
 );
+select * from StocIssuStat;
 
 -- 금융위원회_펀드상품기본정보
--- drop table fundproductinfo;
+-- drop table FundProductInfo;
 create table FundProductInfo(
-	fpino int, -- 일련번호
+	fpino int primary key auto_increment, -- 일련번호
 	basDt DATETIME, -- 기준일자
     srtnCd varchar(30), -- 단축코드
     fndNm varchar(100), -- 펀드명
@@ -100,6 +259,102 @@ create table FundProductInfo(
 	asoStdCd varchar(30) -- 협회표준코드
 );
 select * from fundProductInfo;
+		SELECT 
+		COUNT(DISTINCT F.FPINO) 
+		FROM FUNDPRODUCTINFO F
+        WHERE FNDTP='주식형';
+
+CREATE TABLE stockPriceIndex(
+   stock_type VARCHAR(1000), -- 타입
+   stock_date DATETIME, -- 날짜
+    fin VARCHAR(10000),  -- 종가
+   open VARCHAR(1000), -- 오픈가
+   highLevel VARCHAR(1000), -- 고가
+   lowLevel VARCHAR(1000), -- 저가
+   trading_volume VARCHAR(100), -- 거래량
+   change_percent VARCHAR(1000) -- 변동
+);
+SELECT * FROM stockPriceIndex;
+
+-- -----------------------------
+-- 	은행 정보 --------------------
+-- -----------------------------
+
+
+-- 금융감독원 금융회사개요 API
+-- drop table bankcompany;
+create table BankCompany (
+	bankCompanyNo int primary key auto_increment,
+	dcls_month varchar(6), -- 공시 제출월 [YYYYMM]
+	fin_co_no varchar(10), -- 금융회사코드
+	kor_co_nm varchar(30), -- 금융회사 명
+	dcls_chrg_man varchar(100), -- 공시담당자
+	homp_url varchar(200), -- 홈페이지주소
+	cal_tel varchar(13), -- 콜센터전화번호
+	area_cd int, -- 지역구분 | 01~17	
+	area_nm varchar(2), -- 지역이름 | 서울, 부산, 대구, 인천, 광주, 대전, 울산, 세종, 경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남, 제주
+	exis_yn char(1) -- 점포소재여부
+);
+select * from bankcompany;
+
+-- 금융감독원 정기예금 API
+-- drop table bankdeposit;
+create table BankDeposit (
+	bankDepositNo int primary key auto_increment, -- 일련번호
+	dcls_month varchar(6), -- 공시 제출월 [YYYYMM]
+	fin_co_no varchar(10), -- 금융회사 코드
+	kor_co_nm varchar(20), -- 금융회사명
+	fin_prdt_cd varchar(100), -- 금융상품 코드
+	fin_prdt_nm varchar(100), -- 금융 상품명
+	join_way varchar(100), -- 가입 방법
+	mtrt_int varchar(300), -- 만기 후 이자율
+	spcl_cnd varchar(300), -- 우대조건
+	join_deny char(1), -- 가입제한 Ex) 1:제한없음, 2:서민전용, 3:일부제한"
+	join_member varchar(100), -- 가입대상
+	etc_note varchar(300), -- 기타 유의사항
+	max_limit bigint, -- 최고한도
+	dcls_strt_day DATETIME, -- 공시 시작일
+	dcls_end_day varchar(11), -- 공시 종료일
+	fin_co_subm_day DATETIME, -- 금융회사 제출일 [YYYYMMDDHH24MI]
+
+	intr_rate_type char(1), -- 저축 금리 유형
+	intr_rate_type_nm varchar(5), -- 저축 금리 유형명
+	save_trm varchar(3), -- 저축 기간 [단위: 개월]
+	intr_rate bigint, -- 저축 금리 [소수점 2자리]
+	intr_rate2 bigint -- 최고 우대금리 [소수점 2자리]
+);
+select * from bankdeposit;
+select count(*) as '총 개수' from bankDeposit;
+
+-- 금융감독원 적금 API
+-- drop table BankSaving;
+create table BankSaving (
+	bankSavingNo int primary key auto_increment, -- 일련번호
+	dcls_month varchar(6), -- 공시 제출월 [YYYYMM]
+	fin_co_no varchar(10), -- 금융회사 코드
+	kor_co_nm varchar(50), -- 금융회사명
+	fin_prdt_cd varchar(50), -- 금융상품 코드
+	fin_prdt_nm varchar(100), -- 금융 상품명
+	join_way varchar(300), --  가입 방법
+	mtrt_int varchar(300), --  만기 후 이자율
+	spcl_cnd varchar(300), -- 우대조건
+	join_deny char(1), --  가입제한 Ex) 1:제한없음, 2:서민전용, 3:일부제한"
+	join_member varchar(300), --  가입대상
+	etc_note varchar(300), --  기타 유의사항
+	max_limit bigint, -- 최고한도
+	dcls_strt_day DATETIME, --  공시 시작일
+	dcls_end_day varchar(30), -- 공시 종료일
+	fin_co_subm_day DATETIME, -- 금융회사 제출일 [YYYYMMDDHH24MI]
+
+	intr_rate_type varchar(5), -- 저축 금리 유형	 
+	intr_rate_type_nm varchar(5), --  저축 금리 유형명
+	rsrv_type char(1), -- 적립 유형
+	rsrv_type_nm varchar(5), --  적립 유형명
+	save_trm varchar(3), --  저축 기간 [단위: 개월]
+	intr_rate int, -- 저축 금리 [소수점 2자리] 
+	intr_rate2 int -- 최고 우대금리 [소수점 2자리]
+);
+select * from bankSaving;
 
 -- [은행] 개인신용대출상품
 -- drop table loanCredit;
@@ -186,327 +441,6 @@ create table LoanRentHouse (
 );
 select * from loanRentHouse;
 select count(*) from loanRentHouse;
-
--- APT 분양정보 상세조회 (청약 아파트 분양정보)
-create table APTDetail(
-	aptDno int auto_increment,
-	bsns_mby_nm varchar(30), -- 사업주체명 (시행사) 
-	cnstrct_entrps_nm varchar(30), -- 건설업체명 (시공사)  
-	cntrct_cncls_bgnde DATETIME,	-- 계약시작일
-	cntrct_cncls_endde DATETIME,	-- 계약종료일
-	gnrl_rnk1_crsparea_rcept_pd DATETIME,	-- 1순위 접수일 해당지역
-	gnrl_rnk1_etc_area_rcptde_pd DATETIME,	-- 1순위 접수일 경기지역
-	gnrl_rnk1_etc_gg_rcptde_pd DATETIME,	-- 1순위 접수일 기타지역
-	hmpg_adres varchar(200), -- 홈페이지주소
-	house_dtl_secd_nm varchar(10), -- 주택상세구분코드명
-	house_manage_no int, -- 주택관리번호
-	house_nm varchar(50), -- 주택명
-	house_secd_nm varchar(10),    -- 주택구분코드명
-	hssply_adres varchar(100),   -- 공급위치
-	hssply_zip varchar(5), -- 공급위치 우편번호
-	mdhs_telno varchar(13), -- 문의처 
-	mvn_prearnge_ym varchar(6), -- 입주예정월
-	npln_prvopr_public_house_at char(1), -- 수도권 내 민영 공공주택지구 여부 Y/N
-	parcprc_uls_at char(1), -- 분양가상한제 Y/N
-	pblanc_no int, -- 공고번호
-	pblanc_url varchar(100), -- 분양정보 URL
-	przwner_presnatn_de DATETIME, -- 당첨자발표일
-
-	public_house_earth_at char(1), -- 공공주택지구 Y/N
-	rcept_bgnde DATETIME,	-- 청약접수시작일
-	rcept_endde DATETIME,	-- 청약접수종료일
-	rcrit_pblanc_de DATETIME,	-- 모집공고일
-	rent_secd_nm varchar(10), -- 분양구분코드명
-	speclt_rdn_earth_at char(1), -- 투기과열지구
-	spsply_rcept_bgnde DATETIME, -- 특별공급 접수시작일 
-	spsply_rcept_endde DATETIME, -- 특별공급 접수종료일
-	subscrpt_area_code_nm varchar(10), -- 공급지역명
-	tot_suply_hshldco int -- 공급규모
-);
-
--- APT 분양정보/경쟁률 조회
-create table APTRate(
-	aptRateNo int auto_increment, 
-	house_manage_no int, -- 주택관리번호
-	pblanc_no int, -- 공고번호
-	house_ty varchar(10), -- 주택형
-	reside_senm varchar(5), -- 거주지역
-	subscrpt_rank_code int, -- 순위
-	suply_hshldco int, -- 공급세대수
-	req_cnt varchar(10), -- 접수건수
-	cmpet_rate varchar(10), -- 경쟁률
-	lwet_score int, -- 최저당첨가점
-	top_score int, -- 최고당첨가점
-	avrg_score int -- 평균당첨가점
-);
-
--- APT 분양정보 주택형별 상세조회
-create table APTHouseType (
-	aptHouseNo int auto_increment, 
-	etc_hshldco int, -- 특별공급-기타 세대수
-	house_manage_no int, -- 주택관리번호
-	house_ty varchar(10), -- 주택관리번호
-	instt_recomend_hshldco int, --  특별공급-기관추천 세대수
-	lfe_frst_hshldco int, -- 특별공급-생애최초 세대수
-	lttot_top_amount varchar(20), -- 공급금액 (분양최고금액) (단위:만원)
-	mnych_hshldco int, -- 특별공급-다자녀가구 세대수
-	nwwds_hshldco int, -- 특별공급-신혼부부 세대수
-	old_parnts_suport_hshldco int, -- 특별공급-노부모부양 세대수
-	pblanc_no int, -- 공고번호
-	spsply_hshldco int, -- 특별공급세대수
-	suply_ar varchar(20), -- 공급면적
-	suply_hshldco  int, -- 일반공급세대수
-	transr_instt_enfsn_hshldco int -- 특별공급-이전기관 세대수
-);
-
--- 오피스텔/도시형/민간임대 분양정보/경쟁률 조회
-create table OfficeRate (
-	officeRateNo int auto_increment, 
-	house_manage_no int, -- 주택관리번호	
-	pblanc_no int, -- 공고번호
-
-	house_ty varchar(5), -- 주택형
-	suply_hshldco int, -- 공급세대수
-	residnt_prior_at char(1), -- 거주자 우선여부
-	resident_prior_senm varchar(5), -- 공급구분명
-	req_cnt varchar(5), -- 접수건수
-	cmpet_rate varchar(10) -- 경쟁률
-);
-
--- 오피스텔/도시형/민간임대 분양정보 주택형별 상세조회
-create table OfficeHouseType (
-	officeHouseNo int auto_increment, 
-	excluse_ar decimal(5, 2), -- 전용면적
-	gp char(1), -- 군
-	house_manage_no int, -- 주택관리번호
-	pblanc_no int, -- 공고번호
-	subscrpt_reqst_amount varchar(5), -- 청약신청금
-	suply_amount varchar(11), -- 공급금액 (분양최고금액)
-	suply_hshldco int, -- 공급세대수
-	tp varchar(10) -- 타입
-);
-
--- 공공지원 민간임대 분양정보/경쟁률 조회
-create table PublicRate (
-	pubNo int auto_increment, 
-
-	house_manage_no int, -- 주택관리번호
-	pblanc_no int, -- 공고번호
-	house_ty varchar(5), -- 주택형
-	suply_hshldco int, -- 공급세대수
-	spsply_knd_nm varchar(5), -- 공급유형
-	spsply_knd_hshldco int, -- 배정세대수
-	req_cnt varchar(5), -- 접수건수
-	cmpet_rate varchar(6) -- 경쟁률
-);
-
--- APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세
-create table RemainHouseType (
-	remainHouseNo int auto_increment, 
-	house_manage_no int, -- 주택관리번호
-
-	house_ty varchar(10), -- 모델타입
-	lttot_top_amoun varchar(5), -- 공급금액 (분양최고금액)(단위:만원)
-	pblanc_no int, --  공고번호
-	suply_hshldco int -- 일반공급세대수
-);
-
--- APT 무순위/잔여세대 분양정보 상세조회
-create table RemainDetail (
-	remainNo int auto_increment, 
-
-	bsns_mby_nm varchar(20), -- 사업주체명 (시행사)
-	cntrct_cncls_bgnde DATETIME, -- 계약시작일
-	cntrct_cncls_endde DATETIME, -- 계약종료일
-	gnrl_rcept_bgnde DATETIME, -- 특별공급접수시작일
-	gnrl_rcept_endde DATETIME,  -- 특별공급접수종료일
-	hmpg_adres varchar(100), -- 홈페이지주소
-	house_manage_no int, -- 주택관리번호
-	house_dtl_secd_nm varchar(5), -- 주택상세구분코드명
-	house_nm varchar(30), -- 주택명
-	house_secd_nm varchar(10), -- 주택구분코드명
-	hssply_adres varchar(100), -- 공급위치
-	hssply_zip varchar(5), -- 공급위치 우편번호
-	mdhs_telno varchar(13), -- 문의처
-	mvn_prearnge_ym varchar(6), -- 입주예정월
-	pblanc_no int, -- 공고번호
-	pblanc_url varchar(100), -- 분양정보 URL
-
-	przwner_presnatn_de DATETIME, -- 당첨자발표일
-	rcrit_pblanc_de  DATETIME, -- 모집공고일
-	spsply_rcept_bgnde DATETIME, -- 특별공급 접수시작일
-	spsply_rcept_endde DATETIME, -- 특별공급 접수종료일
-	subscrpt_rcept_bgnde DATETIME, -- 청약접수시작일
-	subscrpt_rcept_endde DATETIME, -- 청약접수종료일
-
-	tot_suply_hshldco int -- 공급규모
-);
-
--- 금융감독원 금융회사개요 API
--- drop table bankcompany;
-create table BankCompany (
-	bankCompanyNo int primary key auto_increment,
-	dcls_month varchar(6), -- 공시 제출월 [YYYYMM]
-	fin_co_no varchar(10), -- 금융회사코드
-	kor_co_nm varchar(30), -- 금융회사 명
-	dcls_chrg_man varchar(100), -- 공시담당자
-	homp_url varchar(200), -- 홈페이지주소
-	cal_tel varchar(13), -- 콜센터전화번호
-	area_cd int, -- 지역구분 | 01~17	
-	area_nm varchar(2), -- 지역이름 | 서울, 부산, 대구, 인천, 광주, 대전, 울산, 세종, 경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남, 제주
-	exis_yn char(1) -- 점포소재여부
-);
-select * from bankcompany;
--- 금융감독원 정기예금 API
--- drop table bankdeposit;
-create table BankDeposit (
-	bankDepositNo int primary key auto_increment, -- 일련번호
-	dcls_month varchar(6), -- 공시 제출월 [YYYYMM]
-	fin_co_no varchar(10), -- 금융회사 코드
-	kor_co_nm varchar(20), -- 금융회사명
-	fin_prdt_cd varchar(100), -- 금융상품 코드
-	fin_prdt_nm varchar(100), -- 금융 상품명
-	join_way varchar(100), -- 가입 방법
-	mtrt_int varchar(300), -- 만기 후 이자율
-	spcl_cnd varchar(300), -- 우대조건
-	join_deny char(1), -- 가입제한 Ex) 1:제한없음, 2:서민전용, 3:일부제한"
-	join_member varchar(100), -- 가입대상
-	etc_note varchar(300), -- 기타 유의사항
-	max_limit bigint, -- 최고한도
-	dcls_strt_day DATETIME, -- 공시 시작일
-	dcls_end_day varchar(11), -- 공시 종료일
-	fin_co_subm_day DATETIME, -- 금융회사 제출일 [YYYYMMDDHH24MI]
-
-	intr_rate_type char(1), -- 저축 금리 유형
-	intr_rate_type_nm varchar(5), -- 저축 금리 유형명
-	save_trm varchar(3), -- 저축 기간 [단위: 개월]
-	intr_rate bigint, -- 저축 금리 [소수점 2자리]
-	intr_rate2 bigint -- 최고 우대금리 [소수점 2자리]
-);
-select * from bankdeposit;
-select count(*) as '총 개수' from bankDeposit;
-select * from bankDeposit where fin_co_no = '0010022';
-
--- 금융감독원 적금 API
--- drop table BankSaving;
-create table BankSaving (
-	bankSavingNo int primary key auto_increment, -- 일련번호
-	dcls_month varchar(6), -- 공시 제출월 [YYYYMM]
-	fin_co_no varchar(10), -- 금융회사 코드
-	kor_co_nm varchar(50), -- 금융회사명
-	fin_prdt_cd varchar(50), -- 금융상품 코드
-	fin_prdt_nm varchar(100), -- 금융 상품명
-	join_way varchar(300), --  가입 방법
-	mtrt_int varchar(300), --  만기 후 이자율
-	spcl_cnd varchar(300), -- 우대조건
-	join_deny char(1), --  가입제한 Ex) 1:제한없음, 2:서민전용, 3:일부제한"
-	join_member varchar(300), --  가입대상
-	etc_note varchar(300), --  기타 유의사항
-	max_limit bigint, -- 최고한도
-	dcls_strt_day DATETIME, --  공시 시작일
-	dcls_end_day varchar(30), -- 공시 종료일
-	fin_co_subm_day DATETIME, -- 금융회사 제출일 [YYYYMMDDHH24MI]
-
-	intr_rate_type varchar(5), -- 저축 금리 유형	 
-	intr_rate_type_nm varchar(5), --  저축 금리 유형명
-	rsrv_type char(1), -- 적립 유형
-	rsrv_type_nm varchar(5), --  적립 유형명
-	save_trm varchar(3), --  저축 기간 [단위: 개월]
-	intr_rate int, -- 저축 금리 [소수점 2자리] 
-	intr_rate2 int -- 최고 우대금리 [소수점 2자리]
-);
-select * from bankSaving;
-select * from bankSaving as bs, bankCompany as bc where bs.fin_co_no=bc.fin_co_no;
-
-drop table member;
-CREATE TABLE MEMBER (
-    NO 		 INT  PRIMARY KEY AUTO_INCREMENT,
-    ID 		 VARCHAR(30) NOT NULL UNIQUE,
-    PASSWORD VARCHAR(100) NOT NULL,
-    ROLE 	 VARCHAR(10) DEFAULT 'ROLE_USER',
-    NAME 	 VARCHAR(15) NOT NULL,
-    PHONE 	 VARCHAR(13),
-    EMAIL 	 VARCHAR(100),
-    ADDRESS  VARCHAR(100),
-    ACCOUNT_NUM	 VARCHAR(100), -- 계좌번호(가상, 모의투자 관련)
-    CURRNET_ASSETS bigint DEFAULT 100000000, -- 보유 자산(가상, 모의투자 관련)
-    STATUS 	 VARCHAR(1) DEFAULT 'Y' CHECK(STATUS IN('Y', 'N')), 
-    ENROLL_DATE DATETIME  DEFAULT CURRENT_TIMESTAMP,
-    MODIFY_DATE DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-insert into member values(0, 'inhee', '1234', DEFAULT, 'inhee', '01012345678', 'd@d.d', '서울', '12345678', DEFAULT, DEFAULT, DEFAULT, DEFAULT);
-insert into member values(0, 'inhee1', '1234', DEFAULT, 'inhee1', '01012345678', 'd@d.d', '서울', '12345678', DEFAULT, DEFAULT, DEFAULT, DEFAULT);
-select * from member;
-
-CREATE TABLE BOARD (	
-    NO INT AUTO_INCREMENT,
-    WRITER_NO INT, 
-	TITLE VARCHAR(50), 
-	CONTENT VARCHAR(2000), 
-	TYPE VARCHAR(100), 
-	ORIGINAL_FILENAME VARCHAR(100), 
-	RENAMED_FILENAME VARCHAR(100), 
-	READCOUNT INT DEFAULT 0, 
-    STATUS VARCHAR(1) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N')),
-    CREATE_DATE DATETIME  DEFAULT CURRENT_TIMESTAMP, 
-    MODIFY_DATE DATETIME  DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT PK_BOARD_NO PRIMARY KEY(NO),
-    CONSTRAINT FK_BOARD_WRITER FOREIGN KEY(WRITER_NO) REFERENCES MEMBER(NO) ON DELETE SET NULL
-);
-
-CREATE TABLE REPLY(
-  NO INT PRIMARY KEY AUTO_INCREMENT,
-  BOARD_NO INT,
-  WRITER_NO INT,
-  CONTENT VARCHAR(400),
-  STATUS VARCHAR(1) DEFAULT 'Y' CHECK (STATUS IN ('Y', 'N')),
-  CREATE_DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
-  MODIFY_DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (BOARD_NO) REFERENCES BOARD(NO),
-  FOREIGN KEY (WRITER_NO) REFERENCES MEMBER(NO)
-);
-
-create table news (
-	title varchar(50), 
-	originallink varchar(255),
-	link varchar(255),
-	description varchar(500),
-	pubDate DATETIME
-);
--- --------------------------------
-drop table investSimul; 
-create table INVESTSIMUL (
-	NO int,
-    ordernum int auto_increment,
-    orderdt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    stockcode varchar(10),
-    stock varchar(30),
-    tradestat VARCHAR(1) DEFAULT 'B' CHECK (tradestat IN('B', 'S')), -- B : 매수 / S : 매도
-    price int,
-    CNT int,
-    paystat VARCHAR(1) DEFAULT 'Y' CHECK (paystat IN ('Y', 'N')), -- Y : 체결 / N : 미체결
-    
-    PRIMARY KEY (ordernum),
-    FOREIGN KEY (NO) REFERENCES MEMBER(NO)
-);
-insert into investsimul values (1, 0, DEFAULT, '0013567', '삼성전자', 's', 1134000, 16, DEFAULT);
-insert into investsimul values (1, 0, DEFAULT, '0465462', '현대자동차', 's', 6890000, 53, DEFAULT);
-insert into investsimul values (1, 0, DEFAULT, '0308465', '테슬라', 'b', 5544000, 180, 'N');
-insert into investsimul values (1, 0, DEFAULT, '0132765', '롯데', 'b', 23690000, 230, DEFAULT);
-insert into investsimul values (2, 0, DEFAULT, '0013567', '삼성전자', 's', 1134000, 16, DEFAULT);
-insert into investsimul values (2, 0, DEFAULT, '0465462', '현대자동차', 's', 6890000, 53, DEFAULT);
-insert into investsimul values (2, 0, DEFAULT, '0308465', '테슬라', 'b', 5544000, 180, 'N');
-insert into investsimul values (2, 0, DEFAULT, '0132765', '롯데', 'b', 23690000, 230, DEFAULT);
-
-select NO, ordernum, orderdt, stockcode, stock, 
-CASE tradestat when 'B' then '매수' else '매도' end, price, cnt, 
-CASE paystat when 'Y' then '체결' else '미체결' end 
-from investsimul;
-
-select * from investsimul;
-
-SELECT * FROM INVESTSIMUL, MEMBER WHERE INVESTSIMUL.NO=MEMBER.NO;
-
 
 -- ----------------------------------------------
 -- ------------- 신용카드 테이블 ------------------
@@ -706,3 +640,264 @@ VALUES ('https://gongsi.crefia.or.kr/assets/portal/images/content/card-logo-kb.j
 VALUES ('https://gongsi.crefia.or.kr/assets/portal/images/content/card-logo-kb.jpg', '국민카드', 'https://gongsi.crefia.or.kr/common/imageView?fileName=%EC%B2%AD%EC%B6%98%EB%8C%80%EB%A1%9C%EC%8B%B1%EA%B8%80_%EC%A0%84%EB%A9%B4(%EB%A7%88%EC%8A%A4%ED%84%B0)[20170117194254039].JPG&fileType=carddamoa', '청춘대로싱글체크카드', '싱글 선호영역 할인', '편의점/다이소/소셜커머스/대중교통/택시/해외이용/올리브영/동물병원등 할인', 'https://card.kbcard.com/CXPRICAC0076.cms?mainCC=a&cooperationcode=01988&categoryCode=L0093&sGroupCode=2');  
 
 SELECT * FROM DEBITCARD;
+
+-- -------------------------------------
+-- 부동산 정보 ----------------------------
+-- -------------------------------------
+
+-- APT 분양정보 상세조회 (청약 아파트 분양정보)
+create table APTDetail(
+	aptDno int primary key auto_increment, -- 일련번호
+	bsns_mby_nm varchar(30), -- 사업주체명 (시행사) 
+	cnstrct_entrps_nm varchar(30), -- 건설업체명 (시공사)  
+	cntrct_cncls_bgnde DATETIME,	-- 계약시작일
+	cntrct_cncls_endde DATETIME,	-- 계약종료일
+	gnrl_rnk1_crsparea_rcept_pd DATETIME,	-- 1순위 접수일 해당지역
+	gnrl_rnk1_etc_area_rcptde_pd DATETIME,	-- 1순위 접수일 경기지역
+	gnrl_rnk1_etc_gg_rcptde_pd DATETIME,	-- 1순위 접수일 기타지역
+	hmpg_adres varchar(200), -- 홈페이지주소
+	house_dtl_secd_nm varchar(10), -- 주택상세구분코드명
+	house_manage_no int, -- 주택관리번호
+	house_nm varchar(50), -- 주택명
+	house_secd_nm varchar(10),    -- 주택구분코드명
+	hssply_adres varchar(100),   -- 공급위치
+	hssply_zip varchar(5), -- 공급위치 우편번호
+	mdhs_telno varchar(13), -- 문의처 
+	mvn_prearnge_ym varchar(6), -- 입주예정월
+	npln_prvopr_public_house_at char(1), -- 수도권 내 민영 공공주택지구 여부 Y/N
+	parcprc_uls_at char(1), -- 분양가상한제 Y/N
+	pblanc_no int, -- 공고번호
+	pblanc_url varchar(100), -- 분양정보 URL
+	przwner_presnatn_de DATETIME, -- 당첨자발표일
+
+	public_house_earth_at char(1), -- 공공주택지구 Y/N
+	rcept_bgnde DATETIME,	-- 청약접수시작일
+	rcept_endde DATETIME,	-- 청약접수종료일
+	rcrit_pblanc_de DATETIME,	-- 모집공고일
+	rent_secd_nm varchar(10), -- 분양구분코드명
+	speclt_rdn_earth_at char(1), -- 투기과열지구
+	spsply_rcept_bgnde DATETIME, -- 특별공급 접수시작일 
+	spsply_rcept_endde DATETIME, -- 특별공급 접수종료일
+	subscrpt_area_code_nm varchar(10), -- 공급지역명
+	tot_suply_hshldco int -- 공급규모
+);
+
+-- APT 분양정보/경쟁률 조회
+drop table APTRate;
+create table APTRate(
+	aptRateNo int primary key auto_increment, -- 일련번호 
+	house_manage_no int, -- 주택관리번호
+	pblanc_no int, -- 공고번호
+	house_ty varchar(10), -- 주택형
+	reside_senm varchar(5), -- 거주지역
+	subscrpt_rank_code int, -- 순위
+	suply_hshldco int, -- 공급세대수
+	req_cnt varchar(10), -- 접수건수
+	cmpet_rate varchar(10), -- 경쟁률
+	lwet_score int, -- 최저당첨가점
+	top_score int, -- 최고당첨가점
+	avrg_score int -- 평균당첨가점
+);
+select * from APTRate;
+
+-- APT 분양정보 주택형별 상세조회
+drop table APTHouseType;
+create table APTHouseType (
+	aptHouseNo int primary key auto_increment, -- 일련번호 
+	etc_hshldco int, -- 특별공급-기타 세대수
+	house_manage_no int, -- 주택관리번호
+	house_ty varchar(10), -- 주택관리번호
+	instt_recomend_hshldco int, --  특별공급-기관추천 세대수
+	lfe_frst_hshldco int, -- 특별공급-생애최초 세대수
+	lttot_top_amount varchar(20), -- 공급금액 (분양최고금액) (단위:만원)
+	mnych_hshldco int, -- 특별공급-다자녀가구 세대수
+	nwwds_hshldco int, -- 특별공급-신혼부부 세대수
+	old_parnts_suport_hshldco int, -- 특별공급-노부모부양 세대수
+	pblanc_no int, -- 공고번호
+	spsply_hshldco int, -- 특별공급세대수
+	suply_ar varchar(20), -- 공급면적
+	suply_hshldco int, -- 일반공급세대수
+	transr_instt_enfsn_hshldco int -- 특별공급-이전기관 세대수
+);
+select * from apthousetype;
+select * from apthousetype as aht, aptrate as ar where aht.house_manage_no=ar.house_manage_no;
+
+-- 오피스텔/도시형/민간임대 분양정보/경쟁률 조회
+create table OfficeRate (
+	officeRateNo int auto_increment, 
+	house_manage_no int, -- 주택관리번호	
+	pblanc_no int, -- 공고번호
+
+	house_ty varchar(5), -- 주택형
+	suply_hshldco int, -- 공급세대수
+	residnt_prior_at char(1), -- 거주자 우선여부
+	resident_prior_senm varchar(5), -- 공급구분명
+	req_cnt varchar(5), -- 접수건수
+	cmpet_rate varchar(10) -- 경쟁률
+);
+
+-- 오피스텔/도시형/민간임대 분양정보 주택형별 상세조회
+create table OfficeHouseType (
+	officeHouseNo int auto_increment, 
+	excluse_ar decimal(5, 2), -- 전용면적
+	gp char(1), -- 군
+	house_manage_no int, -- 주택관리번호
+	pblanc_no int, -- 공고번호
+	subscrpt_reqst_amount varchar(5), -- 청약신청금
+	suply_amount varchar(11), -- 공급금액 (분양최고금액)
+	suply_hshldco int, -- 공급세대수
+	tp varchar(10) -- 타입
+);
+
+-- 공공지원 민간임대 분양정보/경쟁률 조회
+create table PublicRate (
+	pubNo int auto_increment, 
+
+	house_manage_no int, -- 주택관리번호
+	pblanc_no int, -- 공고번호
+	house_ty varchar(5), -- 주택형
+	suply_hshldco int, -- 공급세대수
+	spsply_knd_nm varchar(5), -- 공급유형
+	spsply_knd_hshldco int, -- 배정세대수
+	req_cnt varchar(5), -- 접수건수
+	cmpet_rate varchar(6) -- 경쟁률
+);
+
+-- APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세
+create table RemainHouseType (
+	remainHouseNo int auto_increment, 
+	house_manage_no int, -- 주택관리번호
+
+	house_ty varchar(10), -- 모델타입
+	lttot_top_amoun varchar(5), -- 공급금액 (분양최고금액)(단위:만원)
+	pblanc_no int, --  공고번호
+	suply_hshldco int -- 일반공급세대수
+);
+
+-- APT 무순위/잔여세대 분양정보 상세조회
+create table RemainDetail (
+	remainNo int auto_increment, 
+
+	bsns_mby_nm varchar(20), -- 사업주체명 (시행사)
+	cntrct_cncls_bgnde DATETIME, -- 계약시작일
+	cntrct_cncls_endde DATETIME, -- 계약종료일
+	gnrl_rcept_bgnde DATETIME, -- 특별공급접수시작일
+	gnrl_rcept_endde DATETIME,  -- 특별공급접수종료일
+	hmpg_adres varchar(100), -- 홈페이지주소
+	house_manage_no int, -- 주택관리번호
+	house_dtl_secd_nm varchar(5), -- 주택상세구분코드명
+	house_nm varchar(30), -- 주택명
+	house_secd_nm varchar(10), -- 주택구분코드명
+	hssply_adres varchar(100), -- 공급위치
+	hssply_zip varchar(5), -- 공급위치 우편번호
+	mdhs_telno varchar(13), -- 문의처
+	mvn_prearnge_ym varchar(6), -- 입주예정월
+	pblanc_no int, -- 공고번호
+	pblanc_url varchar(100), -- 분양정보 URL
+
+	przwner_presnatn_de DATETIME, -- 당첨자발표일
+	rcrit_pblanc_de  DATETIME, -- 모집공고일
+	spsply_rcept_bgnde DATETIME, -- 특별공급 접수시작일
+	spsply_rcept_endde DATETIME, -- 특별공급 접수종료일
+	subscrpt_rcept_bgnde DATETIME, -- 청약접수시작일
+	subscrpt_rcept_endde DATETIME, -- 청약접수종료일
+
+	tot_suply_hshldco int -- 공급규모
+);
+
+-- --------------------------------
+drop table investSimul; 
+create table INVESTSIMUL (
+	NO int,
+    ordernum int auto_increment,
+    orderdt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    stockcode varchar(10),
+    stock varchar(30),
+    tradestat VARCHAR(1) DEFAULT 'B' CHECK (tradestat IN('B', 'S')), -- B : 매수 / S : 매도
+    price int,
+    CNT int,
+    paystat VARCHAR(1) DEFAULT 'Y' CHECK (paystat IN ('Y', 'N')), -- Y : 체결 / N : 미체결
+    
+    PRIMARY KEY (ordernum),
+    FOREIGN KEY (NO) REFERENCES MEMBER(NO)
+);
+insert into investsimul values (1, 0, DEFAULT, '0013567', '삼성전자', 's', 1134000, 16, DEFAULT);
+insert into investsimul values (1, 0, DEFAULT, '0465462', '현대자동차', 's', 6890000, 53, DEFAULT);
+insert into investsimul values (1, 0, DEFAULT, '0308465', '테슬라', 'b', 5544000, 180, 'N');
+insert into investsimul values (1, 0, DEFAULT, '0132765', '롯데', 'b', 23690000, 230, DEFAULT);
+insert into investsimul values (2, 0, DEFAULT, '0013567', '삼성전자', 's', 1134000, 16, DEFAULT);
+insert into investsimul values (2, 0, DEFAULT, '0465462', '현대자동차', 's', 6890000, 53, DEFAULT);
+insert into investsimul values (2, 0, DEFAULT, '0308465', '테슬라', 'b', 5544000, 180, 'N');
+insert into investsimul values (2, 0, DEFAULT, '0132765', '롯데', 'b', 23690000, 230, DEFAULT);
+
+select NO, ordernum, orderdt, stockcode, stock, 
+CASE tradestat when 'B' then '매수' else '매도' end, price, cnt, 
+CASE paystat when 'Y' then '체결' else '미체결' end 
+from investsimul;
+
+select * from investsimul;
+
+SELECT * FROM INVESTSIMUL, MEMBER WHERE INVESTSIMUL.NO=MEMBER.NO;
+
+-- -----------------------
+drop table RealEstate;
+create table RealEstate (
+	RealEstateDealNo int primary key auto_increment, -- 일련번호
+	build_Year varchar(6), -- 건축년도 [YYYYMM]
+	contract_Type varchar(10), -- 계약구분
+	term_Contract varchar(50), -- 계약기간
+    offi_Name varchar(50), -- 단지
+	deal_Year varchar(10), -- 년
+	dong varchar(100), -- 법정동
+	deposit varchar(100), -- 보증금액
+    sigungu varchar(100), -- 시군구
+	apartment_Name varchar(50), --  아파트
+	deal_Month varchar(10), -- 월
+	monthly_Rent int(20), --  월세금액
+	deal_Day varchar(10), --  일
+	area varchar(100), -- 전용면적 
+	jibun varchar(100), -- 지번
+	regional_Code varchar(100), --  지역코드
+	floor varchar(10) -- 층
+);
+select count(*) from RealEstate;
+
+select * from RealEstate;
+
+-- ----------------------------------
+-- 뉴스 및 법률 ------------------------------
+-- ----------------------------------
+-- 법률 QNA
+DROP TABLE IF EXISTS lawqna;
+CREATE TABLE lawqna(
+	LQno int primary key auto_increment,
+    middleCategory varchar(100),
+    articleNo int,
+    answer mediumtext,
+    mainCategory varchar(100),
+    question varchar(100),
+    smallCategory varchar(100),      
+    PRIMARY KEY (LQno)
+);
+
+SELECT * FROM lawqna;
+
+-- 법률
+DROP TABLE IF EXISTS lawfirm;
+CREATE TABLE lawfirm(
+	lFno int primary key auto_increment,
+	firmName varchar(100),
+    address varchar(100),
+	PRIMARY KEY (lFno)
+);
+
+SELECT * FROM lawfirm;
+
+-- 뉴스
+create table news (
+	title varchar(50), 
+	originallink varchar(255),
+	link varchar(255),
+	description varchar(500),
+	pubDate DATETIME
+);
