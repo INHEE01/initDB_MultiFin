@@ -23,24 +23,22 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.multifin.model.vo.LawQna;
-import com.multifin.model.vo.RighExerReasSche;
 import com.multifin.model.vo.StocIssuStat;
 
-public class ApiExplorer8 {
-// [법률] 법무부_생활법률지식 정보
-//	(https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15028606)
-	public static final String KEY = "ybDycPaBDlFSgOQQDME9WM%2BSVi%2F3uA3fa5fXxQ8KUb6218kP9KGys5J3HvLNIKvmpewZ7SrKF6aAQGOOnYTGhw%3D%3D"; // API KEY
-	public static final String REQUEST_URL  = "https://apis.data.go.kr/1270000/lawedu/lawqna";
+public class StockIssuStatAPI {
+// [증권] 금융위원회_주식 발행 정보
+//	(https://www.data.go.kr/data/15043423/openapi.do)
+	public static final String KEY = "o0rmsAr3lo90ag1GrkQl6Kiy5BOwZwkfgkaqJ8t2JbG5y%2F9FFPMF%2Bg9Xd1YEb6D6UOVWLFm9Ls438M2dify3fQ%3D%3D"; // API KEY
+	public static final String REQUEST_URL  = "https://apis.data.go.kr/1160100/service/GetStocIssuInfoService/getStocIssuStat";
 	public static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static void main(String[] args) throws IOException {
-		getLawdu();	
+		getStocIssuStat();
 	}
 	
-	public static List<LawQna> getLawdu() throws IOException {
-		List<LawQna> list = new ArrayList<>();
+	public static List<StocIssuStat> getStocIssuStat() throws IOException {
+		List<StocIssuStat> list = new ArrayList<>();
 		
 		try {
 			
@@ -62,16 +60,14 @@ public class ApiExplorer8 {
 	        // ============= /인증서 허용 코드 =================
 			
 			StringBuilder urlBuilder = new StringBuilder(REQUEST_URL); /*URL*/
-			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + KEY); /* API KEY 입력 부분 */
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + KEY); /* API KEY 입력 부분 */
 			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* API KEY 입력 부분 */
-			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /* API KEY 입력 부분 */
-			urlBuilder.append("&" + URLEncoder.encode("mainCategory","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /* API KEY 입력 부분 */
-			urlBuilder.append("&" + URLEncoder.encode("middleCategory","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /* API KEY 입력 부분 */
-			urlBuilder.append("&" + URLEncoder.encode("smallCategory","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /* API KEY 입력 부분 */
-			urlBuilder.append("&" + URLEncoder.encode("articleNo","UTF-8") + "=" + URLEncoder.encode("11", "UTF-8")); /* API KEY 입력 부분 */
-			urlBuilder.append("&" + URLEncoder.encode("question","UTF-8") + "=" + URLEncoder.encode("255", "UTF-8")); /* API KEY 입력 부분 */
-			urlBuilder.append("&" + URLEncoder.encode("answer","UTF-8") + "=" + URLEncoder.encode("Mediumtext", "UTF-8")); /* API KEY 입력 부분 */
-
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("50", "UTF-8")); /* API KEY 입력 부분 */
+			urlBuilder.append("&" + URLEncoder.encode("resultType","UTF-8") + "=" + URLEncoder.encode("xml", "UTF-8")); /* API KEY 입력 부분 */
+			urlBuilder.append("&" + URLEncoder.encode("basDt","UTF-8") + "=" + URLEncoder.encode("20230102", "UTF-8")); /* API KEY 입력 부분 */
+			urlBuilder.append("&" + URLEncoder.encode("crno","UTF-8") + "=" + URLEncoder.encode("1243110000812", "UTF-8")); /* API KEY 입력 부분 */
+			urlBuilder.append("&" + URLEncoder.encode("stckIssuCmpyNm","UTF-8") + "=" + URLEncoder.encode("우리들제약", "UTF-8")); /* API KEY 입력 부분 */
+				
 			System.out.println(urlBuilder);
 			
 			URL url = new URL(urlBuilder.toString());
@@ -96,31 +92,28 @@ public class ApiExplorer8 {
 			System.out.println("Root Element : " + doc.getDocumentElement().getNodeName());
 			System.out.println("======================================================");
 
-			NodeList nList = doc.getElementsByTagName("items"); // !!
-			
+			NodeList nList = doc.getElementsByTagName("item"); // !!
 			for (int i = 0; i < nList.getLength(); i++) {
 				Node node = nList.item(i);
 				System.out.println("\nCurrent Element : " + node.getNodeName());
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
-					
 					try {
-						
 						Element eElement = (Element) node;
 						
-						 int LQno  = 0;
-						 String middleCategory = getStrData(eElement, "middleCategory");	
-						 String articleNo	= getStrData(eElement, "articleNo");
-						 String answer	= getStrData(eElement, "answer");
-						 String mainCategory	= getStrData(eElement, "mainCategory");
-						 String question	= getStrData(eElement, "question");
-						 String smallCategory	= getStrData(eElement, "smallCategory");
+						int sisno = 0;
+						Date basDt = getDateData(eElement, "basDt");
+						long crno = getLongData(eElement, "crno");
+						long onskTisuCnt = getLongData(eElement, "onskTisuCnt"); 
+						int pfstTisuCnt = getIntData(eElement, "pfstTisuCnt");
+						String stckIssuCmpyNm = getStrData(eElement, "stckIssuCmpyNm");
 						
-						 LawQna LQ = new LawQna(LQno,middleCategory,articleNo,answer,mainCategory,question,smallCategory);
+						StocIssuStat sis = new StocIssuStat(sisno, basDt, crno,
+								onskTisuCnt, pfstTisuCnt, stckIssuCmpyNm);
 						
-						list.add(LQ);
+						list.add(sis);
 						
-						System.out.println(LQ.toString());
-						
+						System.out.println(sis.toString());
+						System.out.println("삽입 완료!");
 						
 					} catch (Exception e){
 						System.out.println("데이터가 잘못되었습니다!");

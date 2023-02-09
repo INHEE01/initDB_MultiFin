@@ -58,21 +58,6 @@ public class LawFirm {
 		}
 	}
 	
-//	private void printLawFirmList(String lawName) {
-//		for(LineInfo info : LawFirmList) {
-//			String name = info.getData("법인명");
-//			if(lawName.equals(name) == false) {
-//				continue;
-//			}
-//			System.out.println(info.toString());
-//			String id = info.getData("법인명");
-//			List<LineInfo> nameList = LawFirmIDToNameListMap.get(id);
-//			for(LineInfo info2 : nameList) {
-//				System.out.println(info2);
-//			}
-//			System.out.println("--------------------------------------------------");
-//		}
-//	}
 	private void printLawFirmListAndName(String lawName) {
 		for(LineInfo info : LawFirmList) {
 			String name = info.getData("법인명");

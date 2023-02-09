@@ -73,7 +73,7 @@ public class MultiFinMenu {
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
 				aptHouseTypeController.initaptHouseType(); // APT 분양정보 주택형별 상세조회 정보
 				aptRateController.initAPTRate(); // APT 분양정보/경쟁률 정보 
-				realEstateController.initRealEstate(); // 부동산 정보
+//				realEstateController.initRealEstate(); ????
 				System.out.println("완료되었습니다!");
 				break;
 			case 4:

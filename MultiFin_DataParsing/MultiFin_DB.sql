@@ -21,7 +21,7 @@ CREATE TABLE MEMBER (
     MODIFY_DATE DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-
+select * from member;
 
 INSERT INTO MEMBER (
     mNo, 
@@ -442,7 +442,7 @@ select count(*) from loanRentHouse;
 -- ----------------------------------------------
 -- ------------- 신용카드 테이블 ------------------
 -- ----------------------------------------------
-DROP TABLE IF EXISTS DEBITCARD;
+-- DROP TABLE IF EXISTS DEBITCARD;
 CREATE TABLE DEBITCARD(
 	COMPANY_IMG VARCHAR(1000), -- 카드사 LOGO
 	COMPANY_NM VARCHAR(1000), -- 카드사명
@@ -547,7 +547,7 @@ WHERE COMPANY_NM='롯데카드';
 -- ----------------------------------------------
 -- ------------- 신용카드 테이블 ------------------
 -- ----------------------------------------------
-DROP TABLE IF EXISTS CREDITCARD;
+-- DROP TABLE IF EXISTS CREDITCARD;
 CREATE TABLE CREDITCARD(
 	COMPANY_IMG VARCHAR(1000), -- 카드사 LOGO
 	COMPANY_NM VARCHAR(1000), -- 카드사명
@@ -645,6 +645,7 @@ SELECT * FROM CREDITCARD;
 -- -------------------------------------
 
 -- APT 분양정보 상세조회 (청약 아파트 분양정보)
+-- DROP TABLE APTDETAIL;
 create table APTDetail(
 	aptDno int primary key auto_increment, -- 일련번호
 	bsns_mby_nm varchar(30), -- 사업주체명 (시행사) 
@@ -682,7 +683,7 @@ create table APTDetail(
 );
 
 -- APT 분양정보/경쟁률 조회
-drop table APTRate;
+-- drop table APTRate;
 create table APTRate(
 	aptRateNo int primary key auto_increment, -- 일련번호 
 	house_manage_no int, -- 주택관리번호
@@ -700,7 +701,7 @@ create table APTRate(
 select * from APTRate;
 
 -- APT 분양정보 주택형별 상세조회
-drop table APTHouseType;
+-- drop table APTHouseType;
 create table APTHouseType (
 	aptHouseNo int primary key auto_increment, -- 일련번호 
 	etc_hshldco int, -- 특별공급-기타 세대수
@@ -722,6 +723,7 @@ select * from apthousetype;
 select * from apthousetype as aht, aptrate as ar where aht.house_manage_no=ar.house_manage_no;
 
 -- 오피스텔/도시형/민간임대 분양정보/경쟁률 조회
+-- DROP TABLE OFFICERATE;
 create table OfficeRate (
 	officeRateNo int primary key auto_increment, 
 	house_manage_no int, -- 주택관리번호	
@@ -736,6 +738,7 @@ create table OfficeRate (
 );
 
 -- 오피스텔/도시형/민간임대 분양정보 주택형별 상세조회
+-- DROP TABLE OFFICEHOUSETYPE;
 create table OfficeHouseType (
 	officeHouseNo int primary key auto_increment, 
 	excluse_ar decimal(5, 2), -- 전용면적
@@ -749,6 +752,7 @@ create table OfficeHouseType (
 );
 
 -- 공공지원 민간임대 분양정보/경쟁률 조회
+-- DROP TABLE PUBLICRATE;
 create table PublicRate (
 	pubNo int primary key auto_increment, 
 
@@ -763,6 +767,7 @@ create table PublicRate (
 );
 
 -- APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세
+-- DROP TABLE REMAINHOUSETYPE;
 create table RemainHouseType (
 	remainHouseNo int primary key auto_increment, 
 	house_manage_no int, -- 주택관리번호
@@ -774,6 +779,7 @@ create table RemainHouseType (
 );
 
 -- APT 무순위/잔여세대 분양정보 상세조회
+-- DROP TABLE REMAINDETAIL;
 create table RemainDetail (
 	remainNo int primary key auto_increment, 
 
@@ -805,7 +811,7 @@ create table RemainDetail (
 );
 
 -- --------------------------------
-drop table investSimul; 
+-- drop table investSimul; 
 create table INVESTSIMUL (
 	NO int,
     ordernum int primary key auto_increment,
@@ -817,8 +823,7 @@ create table INVESTSIMUL (
     CNT int,
     paystat VARCHAR(1) DEFAULT 'Y' CHECK (paystat IN ('Y', 'N')), -- Y : 체결 / N : 미체결
     
-    PRIMARY KEY (ordernum),
-    FOREIGN KEY (NO) REFERENCES MEMBER(NO)
+    FOREIGN KEY (NO) REFERENCES MEMBER(mNo)
 );
 insert into investsimul values (1, 0, DEFAULT, '0013567', '삼성전자', 's', 1134000, 16, DEFAULT);
 insert into investsimul values (1, 0, DEFAULT, '0465462', '현대자동차', 's', 6890000, 53, DEFAULT);
@@ -836,10 +841,10 @@ from investsimul;
 
 select * from investsimul;
 
-SELECT * FROM INVESTSIMUL, MEMBER WHERE INVESTSIMUL.NO=MEMBER.NO;
+SELECT * FROM INVESTSIMUL, MEMBER WHERE INVESTSIMUL.NO=MEMBER.mNO;
 
 -- -----------------------
-drop table RealEstate;
+-- drop table RealEstate;
 create table RealEstate (
 	RealEstateDealNo int primary key auto_increment, -- 일련번호
 	build_Year varchar(6), -- 건축년도 [YYYYMM]
@@ -867,32 +872,32 @@ select * from RealEstate;
 -- 뉴스 및 법률 ------------------------------
 -- ----------------------------------
 -- 법률 QNA
-DROP TABLE IF EXISTS lawqna;
+-- DROP TABLE IF EXISTS lawqna;
 CREATE TABLE lawqna(
 	LQno int primary key auto_increment,
-    middleCategory varchar(100),
+    middleCategory varchar(255),
     articleNo int,
     answer mediumtext,
-    mainCategory varchar(100),
-    question varchar(100),
-    smallCategory varchar(100),      
-    PRIMARY KEY (LQno)
+    mainCategory varchar(255),
+    question varchar(255),
+    smallCategory varchar(255)      
 );
 
 SELECT * FROM lawqna;
+select count(*) from lawqna;
 
 -- 법률
-DROP TABLE IF EXISTS lawfirm;
+-- DROP TABLE IF EXISTS lawfirm;
 CREATE TABLE lawfirm(
 	lFno int primary key auto_increment,
 	firmName varchar(100),
-    address varchar(100),
-	PRIMARY KEY (lFno)
+    address varchar(100)
 );
 
 SELECT * FROM lawfirm;
 
 -- 뉴스
+-- DROP TABLE NEWS;
 create table news (
 	newsNo int primary key auto_increment, 
 	title varchar(50), 

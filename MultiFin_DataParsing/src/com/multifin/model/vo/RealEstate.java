@@ -1,7 +1,5 @@
 package com.multifin.model.vo;
 
-import java.util.Date;
-
 public class RealEstate {
 	private int RealEstateDealNo ;
 	private String Build_Year; 		// 
@@ -17,13 +15,15 @@ public class RealEstate {
 	private String Area; 		//
 	private String Jibun; // 
 	private String Regional_Code; 	// 
-	private String Floor; 	// 
+	private String Floor; 	//
+	private double x;
+	private double y;
 	
 	
 	public RealEstate() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+	
 	public RealEstate(int RealEstateDealNo, String build_Year, String contract_Type, String term_Contract, String deal_Year,
 			String dong, String deposit, String apartment_Name, String deal_Month, int monthly_Rent, String deal_Day,
 			String area, String jibun, String regional_Code, String floor) {
@@ -45,6 +45,13 @@ public class RealEstate {
 		Floor = floor;
 	}
 	
+	
+	public RealEstate(int RealEstateDealNo,String dong, String jibun) {
+		this.RealEstateDealNo = RealEstateDealNo;
+		Dong = dong;
+		Jibun = jibun;
+
+	}
 	public int getRealEstateDealNo() {
 		return RealEstateDealNo;
 	}
