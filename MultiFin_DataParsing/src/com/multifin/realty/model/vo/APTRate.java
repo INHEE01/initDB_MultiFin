@@ -1,5 +1,5 @@
 package com.multifin.realty.model.vo;
-
+//APT 분양정보/경쟁률 조회
 public class APTRate {
 
 	private int aptRateNo;
