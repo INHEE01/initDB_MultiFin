@@ -294,7 +294,7 @@ create table BankCompany (
 select * from bankcompany;
 
 -- 금융감독원 정기예금 API
--- drop table bankdeposit;
+ drop table bankdeposit;
 create table BankDeposit (
 	bankDepositNo int primary key auto_increment, -- 일련번호
 	dcls_month varchar(6), -- 공시 제출월 [YYYYMM]
@@ -646,40 +646,40 @@ SELECT * FROM CREDITCARD;
 -- -------------------------------------
 
 -- APT 분양정보 상세조회 (청약 아파트 분양정보)
--- DROP TABLE APTDETAIL;
+ DROP TABLE APTDETAIL;
 create table APTDetail(
 	aptDno int primary key auto_increment, -- 일련번호
-	bsns_mby_nm varchar(30), -- 사업주체명 (시행사) 
+	bsns_mby_nm varchar(50), -- 사업주체명 (시행사) 
 	cnstrct_entrps_nm varchar(30), -- 건설업체명 (시공사)  
-	cntrct_cncls_bgnde DATETIME,	-- 계약시작일
-	cntrct_cncls_endde DATETIME,	-- 계약종료일
-	gnrl_rnk1_crsparea_rcept_pd DATETIME,	-- 1순위 접수일 해당지역
-	gnrl_rnk1_etc_area_rcptde_pd DATETIME,	-- 1순위 접수일 경기지역
-	gnrl_rnk1_etc_gg_rcptde_pd DATETIME,	-- 1순위 접수일 기타지역
-	hmpg_adres varchar(200), -- 홈페이지주소
-	house_dtl_secd_nm varchar(10), -- 주택상세구분코드명
+	cntrct_cncls_bgnde varchar(13),	-- 계약시작일
+	cntrct_cncls_endde varchar(13),	-- 계약종료일
+	gnrl_rnk1_crsparea_rcept_pd varchar(50),	-- 1순위 접수일 해당지역
+	gnrl_rnk1_etc_area_rcptde_pd varchar(50),	-- 1순위 접수일 경기지역
+	gnrl_rnk1_etc_gg_rcptde_pd varchar(50),	-- 1순위 접수일 기타지역
+	hmpg_adres varchar(255), -- 홈페이지주소
+	house_dtl_secd_nm varchar(20), -- 주택상세구분코드명
 	house_manage_no int, -- 주택관리번호
 	house_nm varchar(50), -- 주택명
-	house_secd_nm varchar(10),    -- 주택구분코드명
-	hssply_adres varchar(100),   -- 공급위치
+	house_secd_nm varchar(20),    -- 주택구분코드명
+	hssply_adres varchar(255),   -- 공급위치
 	hssply_zip varchar(5), -- 공급위치 우편번호
-	mdhs_telno varchar(13), -- 문의처 
+	mdhs_telno varchar(255), -- 문의처 
 	mvn_prearnge_ym varchar(6), -- 입주예정월
 	npln_prvopr_public_house_at char(1), -- 수도권 내 민영 공공주택지구 여부 Y/N
 	parcprc_uls_at char(1), -- 분양가상한제 Y/N
 	pblanc_no int, -- 공고번호
-	pblanc_url varchar(100), -- 분양정보 URL
-	przwner_presnatn_de DATETIME, -- 당첨자발표일
+	pblanc_url varchar(255), -- 분양정보 URL
+	przwner_presnatn_de varchar(13), -- 당첨자발표일
 
 	public_house_earth_at char(1), -- 공공주택지구 Y/N
-	rcept_bgnde DATETIME,	-- 청약접수시작일
-	rcept_endde DATETIME,	-- 청약접수종료일
-	rcrit_pblanc_de DATETIME,	-- 모집공고일
+	rcept_bgnde varchar(13),	-- 청약접수시작일
+	rcept_endde varchar(13),	-- 청약접수종료일
+	rcrit_pblanc_de varchar(13),	-- 모집공고일
 	rent_secd_nm varchar(10), -- 분양구분코드명
 	speclt_rdn_earth_at char(1), -- 투기과열지구
-	spsply_rcept_bgnde DATETIME, -- 특별공급 접수시작일 
-	spsply_rcept_endde DATETIME, -- 특별공급 접수종료일
-	subscrpt_area_code_nm varchar(10), -- 공급지역명
+	spsply_rcept_bgnde varchar(13), -- 특별공급 접수시작일 
+	spsply_rcept_endde varchar(13), -- 특별공급 접수종료일
+	subscrpt_area_code_nm varchar(50), -- 공급지역명
 	tot_suply_hshldco int -- 공급규모
 );
 
@@ -721,7 +721,7 @@ create table APTHouseType (
 	transr_instt_enfsn_hshldco int -- 특별공급-이전기관 세대수
 );
 select * from apthousetype;
-select * from apthousetype as aht, aptrate as ar where aht.house_manage_no=ar.house_manage_no;
+-- select * from apthousetype as aht, aptrate as ar where aht.house_manage_no=ar.house_manage_no;
 
 -- 오피스텔/도시형/민간임대 분양정보/경쟁률 조회
 -- DROP TABLE OFFICERATE;
@@ -730,19 +730,44 @@ create table OfficeRate (
 	house_manage_no int, -- 주택관리번호	
 	pblanc_no int, -- 공고번호
 
-	house_ty varchar(5), -- 주택형
+	house_ty varchar(10), -- 주택형
 	suply_hshldco int, -- 공급세대수
 	residnt_prior_at char(1), -- 거주자 우선여부
 	resident_prior_senm varchar(5), -- 공급구분명
-	req_cnt varchar(5), -- 접수건수
-	cmpet_rate varchar(10) -- 경쟁률
+	req_cnt varchar(10), -- 접수건수
+	cmpet_rate varchar(13) -- 경쟁률
 );
 select * from officeRate;
+
+-- drop table OFficeDetail;
+create table OfficeDetail (
+	officeDno int primary key auto_increment, -- 일련번호
+	bsns_mby_nm varchar(50), -- 사업주체명
+	cntrct_cncls_bgnde varchar(13), -- 계약시작일
+	cntrct_cncls_endde varchar(13), -- 계약종료일
+	hmpg_adres varchar(255), -- 홈페이지주소
+	house_dtl_secd_nm varchar(30), -- 주택상세구분코드명
+	house_manage_no varchar(10), -- 주택관리번호
+	house_nm varchar(50), -- 주택명
+	house_secd_nm varchar(30), -- 주택구분코드명
+	hssply_adres varchar(255), -- 공급위치
+	hssply_zip varchar(5), -- 공급위치 우편번호
+	mdhs_telno varchar(255), -- 문의처
+	mvn_prearnge_ym varchar(13), -- 입주예정월
+	pblanc_no varchar(30), -- 공고번호
+	pblanc_url varchar(255), -- 분양정보 URL
+	przwner_presnatn_de varchar(13), -- 당첨자발표일
+	rcrit_pblanc_de varchar(13), -- 모집공고일
+	subscrpt_rcept_bgnde varchar(13), -- 오피스텔/도시형/민간임대 청약접수시작일
+	subscrpt_rcept_endde varchar(13), -- 오피스텔/도시형/민간임대 청약접수종료일  
+	tot_suply_hshldco int -- 공급규모
+);
+select * from OfficeDetail;
 
 -- 오피스텔/도시형/민간임대 분양정보 주택형별 상세조회
 -- DROP TABLE OFFICEHOUSETYPE;
 create table OfficeHouseType (
-	officeHouseNo int primary key auto_increment, 
+	officeHouseTypeNo int primary key auto_increment, 
 	excluse_ar decimal(5, 2), -- 전용면적
 	gp char(1), -- 군
 	house_manage_no int, -- 주택관리번호
@@ -752,6 +777,8 @@ create table OfficeHouseType (
 	suply_hshldco int, -- 공급세대수
 	tp varchar(10) -- 타입
 );
+select * from OfficeHouseType;
+select count(*) from OfficeHouseType;
 
 -- 공공지원 민간임대 분양정보/경쟁률 조회
 -- DROP TABLE PUBLICRATE;

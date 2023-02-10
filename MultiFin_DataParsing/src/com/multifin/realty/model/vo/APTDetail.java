@@ -9,21 +9,13 @@ public class APTDetail {
     private String gnrl_rnk1_crsparea_rcept_pd; //1순위 접수일 해당지역                                                     
     private String gnrl_rnk1_etc_area_rcptde_pd;   //1순위 접수일 경기지역                                                   
     private String gnrl_rnk1_etc_gg_rcptde_pd;      //1순위 접수일 기타지역                                                
-//    private String GNRL_RNK2_CRSPAREA_RCEPT_PD;     //2순위 접수일 해당지역                                                 
-//    private String GNRL_RNK2_ETC_AREA_RCPTDE_PD;     //2순위 접수일 경기지역                                                 
-//    private String GNRL_RNK2_ETC_GG_RCPTDE_PD;       //2순위 접수일 기타지역                                               
     private String hmpg_adres;          			//홈페이지주소                                            
-//    private String HOUSE_DTL_SECD;      		//주택상세구분코드                                                
     private String house_dtl_secd_nm;     			 //주택상세구분코드명                                                
     private int house_manage_no;  					//주택관리번호                                                    
     private String house_nm;							//주택명                                                      
-//    private String HOUSE_SECD;   					//주택구분코드                                                   
     private String house_secd_nm;        //주택구분코드명                                              
     private String hssply_adres;          //공급위치                                            
     private String hssply_zip;      //공급위치 우편번호                                                
-//    private String IMPRMN_BSNS_AT;          //정비사업                                            
-//    private String LRSCL_BLDLND_AT;       //대규모 택지개발지구                                               
-//    private String MDAT_TRGET_AREA_SECD;   //조정대상지역                                                   
     private String mdhs_telno;       //문의처                                               
     private String mvn_prearnge_ym;  //입주예정월                                                    
     private String npln_prvopr_public_house_at;   //수도권 내 민영 공공주택지구                                                   
@@ -35,15 +27,14 @@ public class APTDetail {
     private String rcept_bgnde;				//청약접수시작일
     private String rcept_endde;					//청약접수종료일
     private String rcrit_pblanc_de;				//모집공고일
-//    private String RENT_SECD;					//분양구분코드
     private String rent_secd_nm;				//분양구분코드명
     private String speclt_rdn_earth_at;			//투기과열지구
     private String spsply_rcept_bgnde;			//특별공급 접수시작일
     private String spsply_rcept_endde;			//특별공급 접수종료일
-//    private String SUBSCRPT_AREA_CODE;			//공급지역코드
     private String subscrpt_area_code_nm;			//공급지역명
     private int tot_suply_hshldco;			//공급규모
-	public APTDetail() {
+	
+    public APTDetail() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

@@ -14,28 +14,27 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.multifin.realty.model.vo.APTDetail;
+import com.multifin.realty.model.vo.RemainHouseType;
 //APT 분양정보 상세조회
 //청약홈 분양정보 조회 서비스 API : https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15098547
-public class ApiAPTLttot {
+public class APTDetailAPI {
 	public static final String KEY = "0AqT6LBbXaBEpVflCkRmxb65gc0GDlTLWpxG6k3OBCdr1BjlFlfb6Rlki8Ym7uqntmpFh%2BQa4u7L3%2FR7t8xn%2Bg%3D%3D"; // API KEY
 	public static final String REQUEST_URL  = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1/getAPTLttotPblancDetail";// 요청 URL
 	public static final String GTE ="";
 	
 	public static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 //	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-	
-	public static void main(String[] args) {
-		List<APTDetail> list = parsing("2022-11-01");
-	}
-	
-	public static List<APTDetail> parsing(String GTE) {
+
+	public static List<APTDetail> parsing(Date searchDate, int pageNum) {
+		String dataStr = sdf2.format(searchDate);
+		
 		List<APTDetail> list = new ArrayList<>();
 		try {
 			StringBuilder urlBuilder = new StringBuilder(REQUEST_URL);
-			urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* page */
+			urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + pageNum); /* page */
 			urlBuilder.append("&" + URLEncoder.encode("perPage","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /* perpage */
 			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3ALTE%5D=" + "2023-06-30"); /* LTE 모집공고일 검색종료 */
-			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3AGTE%5D=" + GTE); /* GTE 모집공고일 검색시작 */
+			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3AGTE%5D=" + dataStr); /* GTE 모집공고일 검색시작 */
 			urlBuilder.append("&" + "serviceKey=" + KEY); /**API KEY 입력 부분 */
 			
 			System.out.println(urlBuilder);
@@ -124,6 +123,51 @@ public class ApiAPTLttot {
 		return list;
 	}
 	
+	public static int getPageNum(Date searchDate) {
+		String dataStr = sdf2.format(searchDate);
+		int totalCount = 0;
+		int pNo = 1;
+		
+		List<RemainHouseType> list = new ArrayList<>();
+		try {
+			StringBuilder urlBuilder = new StringBuilder(REQUEST_URL);
+			urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + 1); /* page */
+			urlBuilder.append("&" + URLEncoder.encode("perPage","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /* perpage */
+			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3ALTE%5D=" + "2023-06-30"); /* LTE 모집공고일 검색종료 */
+			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3AGTE%5D=" + dataStr); /* GTE 모집공고일 검색시작 */
+			urlBuilder.append("&" + "serviceKey=" + KEY); /**API KEY 입력 부분 */
+			
+			System.out.println(urlBuilder);
+			
+			URL url = new URL(urlBuilder.toString());
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-type", "application/json");
+
+			int code = conn.getResponseCode(); // 실제 page를 요청하는 코드부
+			System.out.println("ResponseCode : " + code);
+			if (code < 200 || code >= 300) {
+				System.out.println("페이지가 잘못되었습니다.");
+				return pNo;
+			}
+			
+			InputStreamReader isr = new InputStreamReader(conn.getInputStream(), "UTF-8");
+			BufferedReader br = new BufferedReader(isr);
+			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject obj = (JSONObject) jsonParser.parse(br);
+			
+			totalCount = getIntData(obj, "totalCount");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		pNo = (totalCount/100) + 1;
+		return pNo;
+	}
+	
 	private static String getStrData(JSONObject obj , String key){
 		String str = (String) obj.get(key);
 		if(str == null) {
@@ -145,7 +189,7 @@ public class ApiAPTLttot {
 	}
 	
 	private static long getLongData(JSONObject obj , String key){
-		String str = (String) obj.get(key);
+		String str = String.valueOf(obj.get(key));
 		if(str != null) {
 			try {
 				return Long.parseLong(str);
@@ -155,7 +199,7 @@ public class ApiAPTLttot {
 	}
 	
 	private static int getIntData(JSONObject obj , String key){
-		String str = (String) obj.get(key);
+		String str = String.valueOf(obj.get(key));
 		if(str != null) {
 			try {
 				return Integer.parseInt(str);

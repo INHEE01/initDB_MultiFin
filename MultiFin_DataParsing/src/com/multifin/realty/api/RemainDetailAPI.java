@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.multifin.realty.model.vo.RemainDetail;
+import com.multifin.realty.model.vo.RemainHouseType;
 //APT 무순위/잔여세대 분양정보 상세조회
 public class RemainDetailAPI {
 	public static final String KEY = "0AqT6LBbXaBEpVflCkRmxb65gc0GDlTLWpxG6k3OBCdr1BjlFlfb6Rlki8Ym7uqntmpFh%2BQa4u7L3%2FR7t8xn%2Bg%3D%3D"; // API KEY
@@ -22,13 +23,13 @@ public class RemainDetailAPI {
 	public static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
-	public static List<RemainDetail> parsing(Date searchDate) {
+	public static List<RemainDetail> parsing(Date searchDate, int pageNum) {
 		List<RemainDetail> list = new ArrayList<>();
 		String dateStr = sdf2.format(searchDate);
 		
 		try {
 			StringBuilder urlBuilder = new StringBuilder(REQUEST_URL);
-			urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* page */
+			urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + pageNum); /* page */
 			urlBuilder.append("&" + URLEncoder.encode("perPage","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /* perpage */
 			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3ALTE%5D=" + "2023-06-30"); /* LTE 모집공고일 검색종료 */
 			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3AGTE%5D=" + dateStr); /* GTE 모집공고일 검색시작 */
@@ -102,6 +103,51 @@ public class RemainDetailAPI {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public static int getPageNum(Date searchDate) {
+		String dateStr = sdf2.format(searchDate);
+		int totalCount = 0;
+		int pNo = 1;
+		
+		List<RemainHouseType> list = new ArrayList<>();
+		try {
+			StringBuilder urlBuilder = new StringBuilder(REQUEST_URL);
+			urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* page */
+			urlBuilder.append("&" + URLEncoder.encode("perPage","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /* perpage */
+			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3ALTE%5D=" + "2023-06-30"); /* LTE 모집공고일 검색종료 */
+			urlBuilder.append("&" + "cond%5BRCRIT_PBLANC_DE%3A%3AGTE%5D=" + dateStr); /* GTE 모집공고일 검색시작 */
+			urlBuilder.append("&" + "serviceKey=" + KEY); /**API KEY 입력 부분 */
+			
+			System.out.println(urlBuilder);
+			
+			URL url = new URL(urlBuilder.toString());
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-type", "application/json");
+
+			int code = conn.getResponseCode(); // 실제 page를 요청하는 코드부
+			System.out.println("ResponseCode : " + code);
+			if (code < 200 || code >= 300) {
+				System.out.println("페이지가 잘못되었습니다.");
+				return pNo;
+			}
+			
+			InputStreamReader isr = new InputStreamReader(conn.getInputStream(), "UTF-8");
+			BufferedReader br = new BufferedReader(isr);
+			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject obj = (JSONObject) jsonParser.parse(br);
+			
+			totalCount = getIntData(obj, "totalCount");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		pNo = (totalCount/100) + 1;
+		return pNo;
 	}
 	
 	private static String getStrData(JSONObject obj , String key){

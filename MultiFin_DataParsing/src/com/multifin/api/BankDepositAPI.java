@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.multifin.model.vo.BankDeposit;
+import com.multifin.realty.model.vo.RemainHouseType;
 
 // 금융감독원 정기예금 API
 // http://finlife.fss.or.kr/PageLink.do?link=openapi/detail02&menuId=2000126
@@ -109,6 +110,49 @@ public class BankDepositAPI {
 		return list;
 	} // 파싱 끝
 
+	public static int getPageNum(String topFinGrpNo) {
+		int totalCount = 0;
+		int pNo = 1;
+		
+		List<RemainHouseType> list = new ArrayList<>();
+		try {
+			StringBuilder urlBuilder = new StringBuilder(DEPOSIT_JSON_URL);
+			urlBuilder.append("?" + URLEncoder.encode("auth","UTF-8") + "=" + KEY);
+			urlBuilder.append("&" + URLEncoder.encode("topFinGrpNo","UTF-8") + "=" + topFinGrpNo); /* 권역코드 */
+			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + 1);
+			
+			System.out.println(urlBuilder);
+			
+			URL url = new URL(urlBuilder.toString());
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-type", "application/json");
+
+			int code = conn.getResponseCode(); // 실제 page를 요청하는 코드부
+			System.out.println("ResponseCode : " + code);
+			if (code < 200 || code >= 300) {
+				System.out.println("페이지가 잘못되었습니다.");
+				return pNo;
+			}
+			
+			InputStreamReader isr = new InputStreamReader(conn.getInputStream(), "UTF-8");
+			BufferedReader br = new BufferedReader(isr);
+			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject obj = (JSONObject) jsonParser.parse(br);
+			
+			totalCount = getIntData(obj, "totalCount");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		pNo = (totalCount/100) + 1;
+		return pNo;
+	}
+	
+	
 	private static String getStrData(JSONObject obj, String key) {
 		String str = (String) obj.get(key);
 		if (str == null) {

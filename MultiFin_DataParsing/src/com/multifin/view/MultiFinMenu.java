@@ -17,8 +17,12 @@ import com.multifin.controller.LoanMortgageController;
 import com.multifin.controller.LoanRentHouseController;
 import com.multifin.controller.RealEstateController;
 import com.multifin.controller.StockPriceController;
+import com.multifin.realty.controller.APTDetailController;
 import com.multifin.realty.controller.APTHouseTypeController;
 import com.multifin.realty.controller.APTRateController;
+import com.multifin.realty.controller.OfficeDetailController;
+import com.multifin.realty.controller.OfficeHouseTypeController;
+import com.multifin.realty.controller.OfficeRateController;
 import com.multifin.realty.controller.PublicRateController;
 import com.multifin.realty.controller.RemainDetailController;
 import com.multifin.realty.controller.RemainHouseTypeController;
@@ -36,12 +40,21 @@ public class MultiFinMenu {
 	private FundProductInfoController fundProductInfoController = new FundProductInfoController();
 	private StockPriceController stockPriceController = new StockPriceController();
 	// 부동산 파트
+	private APTDetailController aptDetailController = new APTDetailController();
 	private APTHouseTypeController aptHouseTypeController = new APTHouseTypeController();
 	private APTRateController aptRateController = new APTRateController();
+	
 	private RealEstateController realEstateController = new RealEstateController();
 	private RemainDetailController remainDetailController = new RemainDetailController();
 	private RemainHouseTypeController remainHouseTypeController = new RemainHouseTypeController();
+	
+	private OfficeDetailController officeDetailController = new OfficeDetailController();
+	private OfficeRateController officeRateController = new OfficeRateController();
+	private OfficeHouseTypeController officeHouseTypeController = new OfficeHouseTypeController();
+	
 	private PublicRateController publicRateController = new PublicRateController();
+	
+	
 	// 법률 및 뉴스 파트
 	private LawQnaController lawQnaController = new LawQnaController();
 
@@ -77,12 +90,20 @@ public class MultiFinMenu {
 				break;
 			case 3:
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
+				aptDetailController.initAPTDetail(); // APT 분양정보 상세조회 (청약 아파트 분양정보)
 				aptHouseTypeController.initaptHouseType(); // APT 분양정보 주택형별 상세조회 정보
 				aptRateController.initAPTRate(); // APT 분양정보/경쟁률 정보
-				realEstateController.initRealEstate();
-//				remainDetailController.initRemainDetail();	// APT 무순위/잔여세대 분양정보 상세조회 정보인데 오류때문에 잠시 비활성화.
+				
+				officeDetailController.initOfficeDetail(); // 오피스텔/도시형/민간임대 분양정보 상세조회
+				officeHouseTypeController.initOfficeHouseType();
+				officeRateController.initOfficeRate(); // 오피스텔/도시형/민간임대 분양정보/경쟁률 조회 정보
+				
+				publicRateController.initPublicRate(); // 공공지원 민간임대 분양정보/경쟁률 조회 정보
+				
+				remainDetailController.initRemainDetail();	// APT 무순위/잔여세대 분양정보 상세조회 정보인데 오류때문에 잠시 비활성화.
 				remainHouseTypeController.initRemainHouseType(); // APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세 정보
-				publicRateController.initPublicRate(); // 공공지원 민간임대 분양정보/경쟁률 조회
+				
+				realEstateController.initRealEstate();	// 부동산 ?!
 				
 				System.out.println("완료되었습니다!");
 				break;
