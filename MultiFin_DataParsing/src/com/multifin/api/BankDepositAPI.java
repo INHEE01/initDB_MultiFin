@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,20 +27,13 @@ public class BankDepositAPI {
 	public static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMmddHH");
 
-	public static void main(String[] args) {
-		/* 권역코드 | 은행(020000), 여신전문금융(030200), 저축은행(030300), 보험(050000), 금융투자(060000) */
-		/* TODO 23.01.16 은행을 제외한 4가지 금융회사에는 예금데이터가 없다. */
-		bdMainmenu();
-		System.out.println("프로그램이 종료되었습니다.");
-	} // main 끝
-
-	public static List<BankDeposit> parsingDeposit(String topFinGrpNo) {
+	public static List<BankDeposit> parsingDeposit(String topFinGrpNo, int pageNum) {
 		List<BankDeposit> list = new ArrayList<BankDeposit>();
 		try {
 			StringBuffer urlBuilder = new StringBuffer(DEPOSIT_JSON_URL);
-			urlBuilder.append("?" + "auth=" + KEY);
-			urlBuilder.append("&" + "topFinGrpNo=" + topFinGrpNo); /* 권역코드 */
-			urlBuilder.append("&" + "pageNo=" + 1);
+			urlBuilder.append("?" + URLEncoder.encode("auth","UTF-8") + "=" + KEY);
+			urlBuilder.append("&" + URLEncoder.encode("topFinGrpNo","UTF-8") + "=" + topFinGrpNo); /* 권역코드 */
+			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNum);
 
 			System.out.println(urlBuilder.toString()); // 요청 url
 
@@ -98,8 +92,8 @@ public class BankDepositAPI {
 						String intr_rate_type = getStrData(object2, "intr_rate_type");
 						String intr_rate_type_nm = getStrData(object2, "intr_rate_type_nm");
 						String save_trm = getStrData(object2, "save_trm");
-						long intr_rate = getLongData(object2, "intr_rate");
-						long intr_rate2 = getLongData(object2, "intr_rate2");
+						double intr_rate = getDoubleData(object2, "intr_rate");
+						double intr_rate2 = getDoubleData(object2, "intr_rate2");
 						BankDeposit bd = new BankDeposit(bankDepositNo, dcls_month, fin_co_no, kor_co_nm, fin_prdt_cd, fin_prdt_nm, join_way, mtrt_int, spcl_cnd, join_deny, join_member, etc_note, max_limit, dcls_strt_day, dcls_end_day, fin_co_subm_day, intr_rate_type, intr_rate_type_nm, save_trm, intr_rate, intr_rate2);
 						list.add(bd);
 						
@@ -168,7 +162,7 @@ public class BankDepositAPI {
 	}
 
 	private static double getDoubleData(JSONObject obj, String key) {
-		String str = (String) obj.get(key);
+		String str = String.valueOf(obj.get(key));
 		if (str != null) {
 			try {
 				return Double.parseDouble(str);
@@ -177,56 +171,4 @@ public class BankDepositAPI {
 		}
 		return 0;
 	}
-	
-	public static void bdMainmenu() {
-		Scanner sc = new Scanner(System.in);
-		while(true) {
-			String menu = "========== 정기예금 Info Main ===========\n"
-					+ "1. 은행\n"
-					+ "2. 여신전문금융\n"
-					+ "3. 저축은행\n"
-					+ "4. 보험\n"
-					+ "5. 금융투자\n"
-					+ "0.프로그램 끝내기\n"
-					+ "---------------------------------------------\n"
-					+ "선택 : ";
-			while(true) {
-				System.out.print(menu);
-				int select = sc.nextInt();
-				switch (select) {
-					case 1:
-						parsingDeposit("020000");
-						System.out.println("완료되었습니다!!");
-						break;
-					case 2:
-						parsingDeposit("030200");
-						System.out.println("완료되었습니다!!");
-						break;
-					case 3:
-						parsingDeposit("030300");
-						System.out.println("완료되었습니다!!");
-						break;
-					case 4:
-						parsingDeposit("050000");
-						System.out.println("완료되었습니다!!");
-						break;
-					case 5:
-						parsingDeposit("060000");
-						System.out.println("완료되었습니다!!");
-						break;
-					case 0: 
-						System.out.print("정말로 끝내시겠습니까?(y/n) : ");
-						String yn = sc.next();
-						if(yn.equals("y") || yn.equals("Y")) {
-							return;
-						}
-						break;
-					default: 
-						System.out.println("잘못 입력하셨습니다.");
-				}
-			}
-		} // while 끝
-		
-	} // 메인메뉴 메소드 끝
-
 }

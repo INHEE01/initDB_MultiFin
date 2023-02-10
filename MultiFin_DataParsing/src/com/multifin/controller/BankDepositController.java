@@ -11,10 +11,11 @@ public class BankDepositController {
 	// BankDeposit 테이블 초기화
 	public void initBankDeposit() {
 		// 권역코드
+		int pageNum = 1;
 		String[] bankAreaNo = new String[] {"020000", "030200", "030300", "050000", "060000"};
 		
 		for (String num : bankAreaNo) {
-			List<BankDeposit> list = BankDepositAPI.parsingDeposit(num);
+			List<BankDeposit> list = BankDepositAPI.parsingDeposit(num, pageNum);
 			if (list == null || list.isEmpty()) {
 				continue;
 			}

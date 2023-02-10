@@ -23,8 +23,8 @@ public class BankDeposit {
 	private String intr_rate_type; // 저축 금리 유형
 	private String intr_rate_type_nm; // 저축 금리 유형명
 	private String save_trm; // 저축 기간 [단위: 개월]
-	private long intr_rate; // 저축 금리 [소수점 2자리]
-	private long intr_rate2; // 최고 우대금리 [소수점 2자리]
+	private double intr_rate; // 저축 금리 [소수점 2자리]
+	private double intr_rate2; // 최고 우대금리 [소수점 2자리]
 
 	public BankDeposit() {
 		super();
@@ -33,7 +33,7 @@ public class BankDeposit {
 	public BankDeposit(int bankDepositNo, String dcls_month, String fin_co_no, String kor_co_nm, String fin_prdt_cd,
 			String fin_prdt_nm, String join_way, String mtrt_int, String spcl_cnd, String join_deny, String join_member,
 			String etc_note, long max_limit, Date dcls_strt_day, String dcls_end_day, Date fin_co_subm_day,
-			String intr_rate_type, String intr_rate_type_nm, String save_trm, long intr_rate, long intr_rate2) {
+			String intr_rate_type, String intr_rate_type_nm, String save_trm, double intr_rate, double intr_rate2) {
 		super();
 		this.bankDepositNo = bankDepositNo;
 		this.dcls_month = dcls_month;
@@ -221,19 +221,21 @@ public class BankDeposit {
 		this.save_trm = save_trm;
 	}
 
-	public long getIntr_rate() {
+	public double getIntr_rate() {
 		return intr_rate;
 	}
 
-	public void setIntr_rate(long intr_rate) {
+	public void setIntr_rate(double intr_rate) {
 		this.intr_rate = intr_rate;
 	}
 
-	public long getIntr_rate2() {
+	public double getIntr_rate2() {
 		return intr_rate2;
 	}
 
-	public void setIntr_rate2(long intr_rate2) {
+	public void setIntr_rate2(double intr_rate2) {
 		this.intr_rate2 = intr_rate2;
 	}
+
+	
 }

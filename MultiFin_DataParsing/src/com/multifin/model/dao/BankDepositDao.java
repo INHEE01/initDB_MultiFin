@@ -45,8 +45,8 @@ public class BankDepositDao {
 				String intr_rate_type = rs.getString(count++);
 				String intr_rate_type_nm = rs.getString(count++);
 				String save_trm = rs.getString(count++);
-				long intr_rate = rs.getLong(count++);
-				long intr_rate2 = rs.getLong(count++);
+				double intr_rate = rs.getDouble(count++);
+				double intr_rate2 = rs.getDouble(count++);
 
 				BankDeposit info = new BankDeposit(bankDepositNo, dcls_month, fin_co_no, kor_co_nm, fin_prdt_cd,
 						fin_prdt_nm, join_way, mtrt_int, spcl_cnd, join_deny, join_member, etc_note, max_limit,
@@ -101,8 +101,8 @@ public class BankDepositDao {
 			pstmt.setString(cnt++, bankDeposit.getIntr_rate_type());
 			pstmt.setString(cnt++, bankDeposit.getIntr_rate_type_nm());
 			pstmt.setString(cnt++, bankDeposit.getSave_trm());
-			pstmt.setLong(cnt++, bankDeposit.getIntr_rate());
-			pstmt.setLong(cnt++, bankDeposit.getIntr_rate2());
+			pstmt.setDouble(cnt++, bankDeposit.getIntr_rate());
+			pstmt.setDouble(cnt++, bankDeposit.getIntr_rate2());
 			
 			int result = pstmt.executeUpdate();
 			

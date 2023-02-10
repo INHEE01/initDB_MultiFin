@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,9 +81,9 @@ public class BankSavingAPI {
 		List<BankSaving> list = new ArrayList<BankSaving>();
 		try {
 			StringBuffer urlBuilder = new StringBuffer(SAVING_JSON_URL);
-			urlBuilder.append("?" + "auth=" + KEY);
-			urlBuilder.append("&" + "topFinGrpNo=" + topFinGrpNo); /* 권역코드 */
-			urlBuilder.append("&" + "pageNo=" + pageNo);
+			urlBuilder.append("?" + URLEncoder.encode("auth","UTF-8") + "=" + KEY);
+			urlBuilder.append("&" + URLEncoder.encode("topFinGrpNo","UTF-8") + "=" + topFinGrpNo); /* 권역코드 */
+			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNo);
 
 			System.out.println(urlBuilder.toString()); // 요청 url
 
@@ -141,12 +142,12 @@ public class BankSavingAPI {
 						String intr_rate_type = getStrData(object2, "intr_rate_type");
 						String intr_rate_type_nm = getStrData(object2, "intr_rate_type_nm");
 						String save_trm = getStrData(object2, "save_trm");
-						long intr_rate = getLongData(object2, "intr_rate");
-						long intr_rate2 = getLongData(object2, "intr_rate2");
+						double intr_rate = getDoubleData(object2, "intr_rate");
+						double intr_rate2 = getDoubleData(object2, "intr_rate2");
 						BankSaving bs = new BankSaving(bankSavingNo, dcls_month, fin_co_no, kor_co_nm, fin_prdt_cd, fin_prdt_nm, join_way, mtrt_int, spcl_cnd, join_deny, join_member, etc_note, max_limit, dcls_strt_day, dcls_end_day, fin_co_subm_day, intr_rate_type_nm, intr_rate_type_nm, intr_rate_type, intr_rate_type_nm, save_trm, intr_rate, intr_rate2);
 						list.add(bs);
 						
-						System.out.println(bs.toString() + "삽입 완료!");
+						System.out.println(bs.toString());
 					}
 				} // option for문 끝
 				
@@ -211,7 +212,7 @@ public class BankSavingAPI {
 	}
 
 	private static double getDoubleData(JSONObject obj, String key) {
-		String str = (String) obj.get(key);
+		String str = String.valueOf(obj.get(key));
 		if (str != null) {
 			try {
 				return Double.parseDouble(str);

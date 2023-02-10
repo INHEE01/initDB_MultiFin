@@ -47,8 +47,8 @@ public class BankSavingDao {
 				String rsrv_type = rs.getString(count++);
 				String rsrv_type_nm = rs.getString(count++);
 				String save_trm = rs.getString(count++);
-				long intr_rate = rs.getLong(count++);
-				long intr_rate2 = rs.getLong(count++);
+				double intr_rate = rs.getDouble(count++);
+				double intr_rate2 = rs.getDouble(count++);
 				
 				BankSaving info = new BankSaving(bankSavingNo,
 						dcls_month, fin_co_no, kor_co_nm, fin_prdt_cd,
@@ -110,8 +110,8 @@ public class BankSavingDao {
 			pstmt.setString(cnt++, bankSaving.getRsrv_type());
 			pstmt.setString(cnt++, bankSaving.getRsrv_type_nm());
 			pstmt.setString(cnt++, bankSaving.getSave_trm());
-			pstmt.setLong(cnt++, bankSaving.getIntr_rate());
-			pstmt.setLong(cnt++, bankSaving.getIntr_rate2());
+			pstmt.setDouble(cnt++, bankSaving.getIntr_rate());
+			pstmt.setDouble(cnt++, bankSaving.getIntr_rate2());
 			
 			int result = pstmt.executeUpdate();
 			
