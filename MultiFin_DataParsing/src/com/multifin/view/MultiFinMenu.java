@@ -61,8 +61,13 @@ public class MultiFinMenu {
 	public void mainMenu() throws IOException, ParseException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		String menu = "========== MULTIFIN DATABASE 초기화 프로그램 ===========\n" + "1.은행파트 DB 초기화\n" + "2.증권파트 DB 초기화\n"
-				+ "3.부동산 파트 DB 초기화\n" + "4. 뉴스 및 법률 파트 DB 초기화\n" + "0.프로그램 끝내기\n"
+		String menu = "========== MULTIFIN DATABASE 초기화 프로그램 ===========\n" 
+				+ "1.은행파트 DB 초기화\n" 
+				+ "2.증권파트 DB 초기화\n"
+				+ "3.부동산 파트 DB 초기화\n" 
+				+ "4. 뉴스 및 법률 파트 DB 초기화\n" 
+				+ "5. RealEstate 테이블 (별개) 초기화"
+				+ "0.프로그램 끝내기\n"
 				+ "---------------------------------------------\n" + "선택 : ";
 
 		while (true) {
@@ -81,6 +86,7 @@ public class MultiFinMenu {
 				System.out.println("완료되었습니다!");
 
 				break;
+				
 			case 2:
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
 				exchangeRateController.initExchangeRate(); // 환율 정보
@@ -88,6 +94,7 @@ public class MultiFinMenu {
 				stockPriceController.initStockPrice(); // 주식 시세 정보
 				System.out.println("완료되었습니다!");
 				break;
+				
 			case 3:
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
 				aptDetailController.initAPTDetail(); // APT 분양정보 상세조회 (청약 아파트 분양정보)
@@ -103,21 +110,28 @@ public class MultiFinMenu {
 				remainDetailController.initRemainDetail();	// APT 무순위/잔여세대 분양정보 상세조회 정보인데 오류때문에 잠시 비활성화.
 				remainHouseTypeController.initRemainHouseType(); // APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세 정보
 				
-				realEstateController.initRealEstate();	// 부동산 ?!
-				
 				System.out.println("완료되었습니다!");
 				break;
+				
 			case 4:
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
 				lawQnaController.initLawQna(); // 법무부_생활법률지식 정보
 				System.out.println("완료되었습니다!");
 				break;
+				
+			case 5:
+				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
+				realEstateController.initRealEstate(); // 부동산 ?!
+				System.out.println("완료되었습니다!");
+				break;
+				
 			case 0:
 				System.out.print("정말로 끝내시겠습니까?(y/n) : ");
 				if (br.readLine().equalsIgnoreCase("y")) {
 					return;
 				}
 				break;
+				
 			default:
 				System.out.println("잘못 입력하셨습니다. 다시 입력해주세요!");
 			}
