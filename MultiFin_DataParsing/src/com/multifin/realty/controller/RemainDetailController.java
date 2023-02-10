@@ -17,6 +17,7 @@ public class RemainDetailController {
 
 		while (true) {
 			System.out.println(cal.getTime()); // 현재 날짜
+			
 			if(cal.after(today) == true) {
 				break;
 			}

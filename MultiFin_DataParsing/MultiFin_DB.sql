@@ -316,14 +316,14 @@ create table BankDeposit (
 	intr_rate_type char(1), -- 저축 금리 유형
 	intr_rate_type_nm varchar(5), -- 저축 금리 유형명
 	save_trm varchar(3), -- 저축 기간 [단위: 개월]
-	intr_rate bigint, -- 저축 금리 [소수점 2자리]
-	intr_rate2 bigint -- 최고 우대금리 [소수점 2자리]
+	intr_rate decimal(5, 2), -- 저축 금리 [소수점 2자리]
+	intr_rate2 decimal(5, 2) -- 최고 우대금리 [소수점 2자리]
 );
 select * from bankdeposit;
 select count(*) as '총 개수' from bankDeposit;
 
 -- 금융감독원 적금 API
--- drop table BankSaving;
+ drop table BankSaving;
 create table BankSaving (
 	bankSavingNo int primary key auto_increment, -- 일련번호
 	dcls_month varchar(6), -- 공시 제출월 [YYYYMM]
@@ -347,10 +347,11 @@ create table BankSaving (
 	rsrv_type char(1), -- 적립 유형
 	rsrv_type_nm varchar(5), --  적립 유형명
 	save_trm varchar(3), --  저축 기간 [단위: 개월]
-	intr_rate int, -- 저축 금리 [소수점 2자리] 
-	intr_rate2 int -- 최고 우대금리 [소수점 2자리]
+	intr_rate decimal(5, 2), -- 저축 금리 [소수점 2자리] 
+	intr_rate2 decimal(5, 2) -- 최고 우대금리 [소수점 2자리]
 );
 select * from bankSaving;
+
 
 -- [은행] 개인신용대출상품
 -- drop table loanCredit;
@@ -736,6 +737,7 @@ create table OfficeRate (
 	req_cnt varchar(5), -- 접수건수
 	cmpet_rate varchar(10) -- 경쟁률
 );
+select * from officeRate;
 
 -- 오피스텔/도시형/민간임대 분양정보 주택형별 상세조회
 -- DROP TABLE OFFICEHOUSETYPE;
@@ -765,6 +767,7 @@ create table PublicRate (
 	req_cnt varchar(5), -- 접수건수
 	cmpet_rate varchar(6) -- 경쟁률
 );
+select * from publicRate;
 
 -- APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세
 -- DROP TABLE REMAINHOUSETYPE;
@@ -777,38 +780,40 @@ create table RemainHouseType (
 	pblanc_no int, --  공고번호
 	suply_hshldco int -- 일반공급세대수
 );
+select * from RemainHouseType;
 
 -- APT 무순위/잔여세대 분양정보 상세조회
 -- DROP TABLE REMAINDETAIL;
 create table RemainDetail (
 	remainNo int primary key auto_increment, 
 
-	bsns_mby_nm varchar(20), -- 사업주체명 (시행사)
-	cntrct_cncls_bgnde DATETIME, -- 계약시작일
-	cntrct_cncls_endde DATETIME, -- 계약종료일
-	gnrl_rcept_bgnde DATETIME, -- 특별공급접수시작일
-	gnrl_rcept_endde DATETIME,  -- 특별공급접수종료일
-	hmpg_adres varchar(100), -- 홈페이지주소
+	bsns_mby_nm varchar(100), -- 사업주체명 (시행사)
+	cntrct_cncls_bgnde varchar(30), -- 계약시작일
+	cntrct_cncls_endde varchar(30), -- 계약종료일
+	gnrl_rcept_bgnde varchar(30), -- 특별공급접수시작일
+	gnrl_rcept_endde varchar(30),  -- 특별공급접수종료일
+	hmpg_adres varchar(255), -- 홈페이지주소
 	house_manage_no int, -- 주택관리번호
 	house_dtl_secd_nm varchar(5), -- 주택상세구분코드명
-	house_nm varchar(30), -- 주택명
+	house_nm varchar(50), -- 주택명
 	house_secd_nm varchar(10), -- 주택구분코드명
-	hssply_adres varchar(100), -- 공급위치
+	hssply_adres varchar(255), -- 공급위치
 	hssply_zip varchar(5), -- 공급위치 우편번호
-	mdhs_telno varchar(13), -- 문의처
-	mvn_prearnge_ym varchar(6), -- 입주예정월
+	mdhs_telno varchar(50), -- 문의처
+	mvn_prearnge_ym varchar(10), -- 입주예정월
 	pblanc_no int, -- 공고번호
-	pblanc_url varchar(100), -- 분양정보 URL
+	pblanc_url varchar(255), -- 분양정보 URL
 
-	przwner_presnatn_de DATETIME, -- 당첨자발표일
-	rcrit_pblanc_de  DATETIME, -- 모집공고일
-	spsply_rcept_bgnde DATETIME, -- 특별공급 접수시작일
-	spsply_rcept_endde DATETIME, -- 특별공급 접수종료일
-	subscrpt_rcept_bgnde DATETIME, -- 청약접수시작일
-	subscrpt_rcept_endde DATETIME, -- 청약접수종료일
+	przwner_presnatn_de varchar(30), -- 당첨자발표일
+	rcrit_pblanc_de  varchar(30), -- 모집공고일
+	spsply_rcept_bgnde varchar(30), -- 특별공급 접수시작일
+	spsply_rcept_endde varchar(30), -- 특별공급 접수종료일
+	subscrpt_rcept_bgnde varchar(30), -- 청약접수시작일
+	subscrpt_rcept_endde varchar(30), -- 청약접수종료일
 
 	tot_suply_hshldco int -- 공급규모
 );
+select * from RemainDetail;
 
 -- --------------------------------
 -- drop table investSimul; 
@@ -872,7 +877,7 @@ select * from RealEstate;
 -- 뉴스 및 법률 ------------------------------
 -- ----------------------------------
 -- 법률 QNA
--- DROP TABLE IF EXISTS lawqna;
+ DROP TABLE IF EXISTS lawqna;
 CREATE TABLE lawqna(
 	LQno int primary key auto_increment,
     middleCategory varchar(255),

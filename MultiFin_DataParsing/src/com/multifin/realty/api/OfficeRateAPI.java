@@ -16,7 +16,7 @@ import org.json.simple.parser.JSONParser;
 
 import com.multifin.realty.model.vo.OfficeRate;
 
-public class ApiOfficeRate {
+public class OfficeRateAPI {
 	public static final String KEY = "0AqT6LBbXaBEpVflCkRmxb65gc0GDlTLWpxG6k3OBCdr1BjlFlfb6Rlki8Ym7uqntmpFh%2BQa4u7L3%2FR7t8xn%2Bg%3D%3D"; // API KEY
 	public static final String REQUEST_URL  = "https://api.odcloud.kr/api/ApplyhomeInfoCmpetRtSvc/v1/getUrbtyOfctlLttotPblancCmpet";// 요청 URL
 	public static final String page ="";

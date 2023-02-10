@@ -133,7 +133,7 @@ public class BankSavingAPI {
 				long max_limit = getLongData(object, "max_limit");
 				Date dcls_strt_day = getDateData(object, "dcls_strt_day");
 				String dcls_end_day = getStrData(object, "dcls_end_day");
-				Date fin_co_subm_day = getDateData(object, "fin_co_subm_day");
+				Date fin_co_subm_day = getDateData2(object, "fin_co_subm_day");
 				
 				for(int j = 0; j < optionList.size(); j++) {
 					JSONObject object2 = (JSONObject) optionList.get(j);

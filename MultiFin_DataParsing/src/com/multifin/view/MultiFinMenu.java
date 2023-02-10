@@ -19,6 +19,7 @@ import com.multifin.controller.RealEstateController;
 import com.multifin.controller.StockPriceController;
 import com.multifin.realty.controller.APTHouseTypeController;
 import com.multifin.realty.controller.APTRateController;
+import com.multifin.realty.controller.PublicRateController;
 import com.multifin.realty.controller.RemainDetailController;
 import com.multifin.realty.controller.RemainHouseTypeController;
 
@@ -40,51 +41,49 @@ public class MultiFinMenu {
 	private RealEstateController realEstateController = new RealEstateController();
 	private RemainDetailController remainDetailController = new RemainDetailController();
 	private RemainHouseTypeController remainHouseTypeController = new RemainHouseTypeController();
+	private PublicRateController publicRateController = new PublicRateController();
 	// 법률 및 뉴스 파트
 	private LawQnaController lawQnaController = new LawQnaController();
-	
+
 	public void mainMenu() throws IOException, ParseException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		String menu = "========== MULTIFIN DATABASE 초기화 프로그램 ===========\n"
-				+ "1.은행파트 DB 초기화\n"
-				+ "2.증권파트 DB 초기화\n"
-				+ "3.부동산 파트 DB 초기화\n"
-				+ "4. 뉴스 및 법률 파트 DB 초기화\n"
-				+ "0.프로그램 끝내기\n"
-				+ "---------------------------------------------\n"
-				+ "선택 : "; 
-		
-		while (true) { 
+
+		String menu = "========== MULTIFIN DATABASE 초기화 프로그램 ===========\n" + "1.은행파트 DB 초기화\n" + "2.증권파트 DB 초기화\n"
+				+ "3.부동산 파트 DB 초기화\n" + "4. 뉴스 및 법률 파트 DB 초기화\n" + "0.프로그램 끝내기\n"
+				+ "---------------------------------------------\n" + "선택 : ";
+
+		while (true) {
 			System.out.print(menu);
 			int choice = Integer.parseInt(br.readLine());
-			
-			switch(choice) {
+
+			switch (choice) {
 			case 1:
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
 				bankCompanyController.initBankCompany(); // 금융회사 정보
 				bankDepositController.initBankDeposit(); // 정기예금 정보
-				bankSavingController.initBankSaving();   // 적금 정보
-				loanCreditController.initLoanCredit();   // 개인신용대출상품 정보
+				bankSavingController.initBankSaving(); // 적금 정보
+				loanCreditController.initLoanCredit(); // 개인신용대출상품 정보
 				loanMortgageController.initLoanMortgage(); // 주택담보대출 정보
 				loanRentHouseController.initLoanRentHouse(); // 전세자금대출 정보
 				System.out.println("완료되었습니다!");
-				
+
 				break;
 			case 2:
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
 				exchangeRateController.initExchangeRate(); // 환율 정보
-				fundProductInfoController.initFundProductInfo(); // 펀드 기본정보 
+				fundProductInfoController.initFundProductInfo(); // 펀드 기본정보
 				stockPriceController.initStockPrice(); // 주식 시세 정보
 				System.out.println("완료되었습니다!");
 				break;
 			case 3:
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
 				aptHouseTypeController.initaptHouseType(); // APT 분양정보 주택형별 상세조회 정보
-				aptRateController.initAPTRate(); // APT 분양정보/경쟁률 정보 
+				aptRateController.initAPTRate(); // APT 분양정보/경쟁률 정보
 				realEstateController.initRealEstate();
 //				remainDetailController.initRemainDetail();	// APT 무순위/잔여세대 분양정보 상세조회 정보인데 오류때문에 잠시 비활성화.
-				remainHouseTypeController.initRemainHouseType();	// APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세 정보
+				remainHouseTypeController.initRemainHouseType(); // APT 무순위/잔여세대 분양정보 주택형별 상세조회 상세기능 명세 정보
+				publicRateController.initPublicRate(); // 공공지원 민간임대 분양정보/경쟁률 조회
+				
 				System.out.println("완료되었습니다!");
 				break;
 			case 4:
@@ -94,13 +93,13 @@ public class MultiFinMenu {
 				break;
 			case 0:
 				System.out.print("정말로 끝내시겠습니까?(y/n) : ");
-				if(br.readLine().equalsIgnoreCase("y")) {
+				if (br.readLine().equalsIgnoreCase("y")) {
 					return;
 				}
 				break;
 			default:
 				System.out.println("잘못 입력하셨습니다. 다시 입력해주세요!");
-			}	
+			}
 		}
 	}
 }

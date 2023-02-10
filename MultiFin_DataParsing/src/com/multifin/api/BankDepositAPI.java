@@ -24,7 +24,7 @@ public class BankDepositAPI {
 	public static final String DEPOSIT_JSON_URL = "http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json";
 	
 	public static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMmddHH");
 
 	public static void main(String[] args) {
 		/* 권역코드 | 은행(020000), 여신전문금융(030200), 저축은행(030300), 보험(050000), 금융투자(060000) */
@@ -90,7 +90,7 @@ public class BankDepositAPI {
 				long max_limit = getLongData(object, "max_limit");
 				Date dcls_strt_day = getDateData(object, "dcls_strt_day");
 				String dcls_end_day = getStrData(object, "dcls_end_day");
-				Date fin_co_subm_day = getDateData(object, "fin_co_subm_day");
+				Date fin_co_subm_day = getDateData2(object, "fin_co_subm_day");
 				
 				for(int j = 0; j < optionList.size(); j++) {
 					JSONObject object2 = (JSONObject) optionList.get(j);
@@ -129,6 +129,17 @@ public class BankDepositAPI {
 		if (str != null) {
 			try {
 				return sdf1.parse(str);
+			} catch (Exception e) {
+			}
+		}
+		return null;
+	}
+	
+	private static Date getDateData2(JSONObject obj, String key) {
+		String str = (String) obj.get(key);
+		if (str != null) {
+			try {
+				return sdf2.parse(str);
 			} catch (Exception e) {
 			}
 		}
