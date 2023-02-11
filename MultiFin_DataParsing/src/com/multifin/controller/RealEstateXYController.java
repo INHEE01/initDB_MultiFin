@@ -19,15 +19,18 @@ public class RealEstateXYController {
 	public void initRealEstate() throws IOException, ParseException {
 		// 권역코드
 		ArrayList<String> searchAddr = new ArrayList<>();
-
+		int count=1;
 		for (int i = 0; i < RealEstateParsingService.selectAll().size(); i++) {
 			if(RealEstateParsingService.selectAll().get(i).equals(null)||RealEstateParsingService.selectAll().get(i).toString().isEmpty()) {
 				continue;	
 			}
 			searchAddr.add(RealEstateParsingService.selectAll().get(i).getDong()
 					+ RealEstateParsingService.selectAll().get(i).getJibun());
+			System.out.println("잠시만기다려주세요!"+count+"번째 파싱중입니다."); //7920번쨰 까지..
+			count++;
 		}
 		System.out.println("FINISH");
+		
 		for (String address : searchAddr) {
 			List<MarkerParsing> list = RealEstateDealAPI2.MarkerParsing(address);
 			if (list == null || list.isEmpty()) {

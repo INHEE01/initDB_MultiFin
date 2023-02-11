@@ -18,7 +18,7 @@ import com.multifin.model.vo.MarkerParsing;
 public class RealEstateDealAPI2 {
 
 	public static void main(String[] args) throws org.json.simple.parser.ParseException, IOException {
-//	MarkerParsing("삼평동 624");
+	MarkerParsing("삼평동 624");
 	}
 
 	public static List<MarkerParsing> MarkerParsing(String address) throws IOException, ParseException {

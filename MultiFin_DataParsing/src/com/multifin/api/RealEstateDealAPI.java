@@ -33,7 +33,7 @@ public class RealEstateDealAPI {
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static void main(String[] args) throws IOException {
-		parsingRealEstate("11110","201512");
+//		parsingRealEstate("11110","201512");
 	}
 	
 	public static List<RealEstate> parsingRealEstate(String LAWD_CD, String DEAL_YMD) throws IOException {

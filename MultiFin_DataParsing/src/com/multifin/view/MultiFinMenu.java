@@ -16,6 +16,7 @@ import com.multifin.controller.LoanCreditController;
 import com.multifin.controller.LoanMortgageController;
 import com.multifin.controller.LoanRentHouseController;
 import com.multifin.controller.RealEstateController;
+import com.multifin.controller.RealEstateXYController;
 import com.multifin.controller.StockPriceController;
 import com.multifin.realty.controller.APTDetailController;
 import com.multifin.realty.controller.APTHouseTypeController;
@@ -44,7 +45,6 @@ public class MultiFinMenu {
 	private APTHouseTypeController aptHouseTypeController = new APTHouseTypeController();
 	private APTRateController aptRateController = new APTRateController();
 	
-	private RealEstateController realEstateController = new RealEstateController();
 	private RemainDetailController remainDetailController = new RemainDetailController();
 	private RemainHouseTypeController remainHouseTypeController = new RemainHouseTypeController();
 	
@@ -53,7 +53,8 @@ public class MultiFinMenu {
 	private OfficeHouseTypeController officeHouseTypeController = new OfficeHouseTypeController();
 	
 	private PublicRateController publicRateController = new PublicRateController();
-	
+	private RealEstateController realEstateController = new RealEstateController();
+	private RealEstateXYController realEstateXYController = new RealEstateXYController();
 	
 	// 법률 및 뉴스 파트
 	private LawQnaController lawQnaController = new LawQnaController();
@@ -121,7 +122,8 @@ public class MultiFinMenu {
 				
 			case 5:
 				System.out.println("DB 초기화를 실행합니다. 시간이 다소 걸릴 수 있습니다!");
-				realEstateController.initRealEstate(); // 부동산 ?!
+				realEstateController.initRealEstate(); // 부동산 정보
+				realEstateXYController.initRealEstate(); // 좌표 정보 초기화
 				System.out.println("완료되었습니다!");
 				break;
 				

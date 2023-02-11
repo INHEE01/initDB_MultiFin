@@ -7,23 +7,15 @@ import org.json.simple.parser.ParseException;
 
 import com.multifin.api.RealEstateDealAPI;
 import com.multifin.api.RealEstateDealAPI2;
-import com.multifin.api.RealEstateSvcOffiRentAPI;
-import com.multifin.api.RealEstateSvcSHRentAPI;
 import com.multifin.model.service.RealEstateDealService;
 import com.multifin.model.service.RealEstateParsingService;
-import com.multifin.model.service.RealEstateSvcOffiRentService;
-import com.multifin.model.service.RealEstateSvcSHRentService;
 import com.multifin.model.vo.MarkerParsing;
 import com.multifin.model.vo.RealEstate;
-import com.multifin.model.vo.RealEstateSvcOffiRent;
-import com.multifin.model.vo.RealEstateSvcSHRent;
 
 public class RealEstateController {
 
 	private RealEstateDealService RealEstateDealService = new RealEstateDealService();
 
-	private RealEstateSvcSHRentService RealEstateSvcSHRentService = new RealEstateSvcSHRentService();
-	private RealEstateSvcOffiRentService RealEstateSvcOffiRentService = new RealEstateSvcOffiRentService();
 	private RealEstateParsingService RealEstateParsingService = new RealEstateParsingService();
 
 	//  테이블 초기화
