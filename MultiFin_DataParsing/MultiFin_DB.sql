@@ -876,7 +876,7 @@ select * from investsimul;
 SELECT * FROM INVESTSIMUL, MEMBER WHERE INVESTSIMUL.NO=MEMBER.mNO;
 
 -- -----------------------
--- drop table RealEstate;
+ drop table RealEstate;
 create table RealEstate (
 	RealEstateDealNo int primary key auto_increment, -- 일련번호
 	build_Year varchar(6), -- 건축년도 [YYYYMM]
@@ -889,16 +889,31 @@ create table RealEstate (
     sigungu varchar(100), -- 시군구
 	apartment_Name varchar(50), --  아파트
 	deal_Month varchar(10), -- 월
-	monthly_Rent int(20), --  월세금액
+	monthly_Rent int, --  월세금액
 	deal_Day varchar(10), --  일
 	area varchar(100), -- 전용면적 
 	jibun varchar(100), -- 지번
 	regional_Code varchar(100), --  지역코드
-	floor varchar(10) -- 층
+	floor varchar(10), -- 층
+    x decimal(20, 15), -- x 좌표
+    y decimal(20, 15) -- y 좌표
 );
 select count(*) from RealEstate;
 
 select * from RealEstate;
+
+--  좌표 DB Table
+-- drop table marker;
+create table Marker ( 
+	RealEstateDealNo int primary key auto_increment, -- 일련번호
+	searchAddr varchar(100), -- 법정동
+	x varchar(100), -- 지번
+    y varchar(100)
+);
+select * from Marker;
+
+select count(*) from Marker;
+
 
 -- ----------------------------------
 -- 뉴스 및 법률 ------------------------------
