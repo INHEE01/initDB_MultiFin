@@ -289,8 +289,28 @@ create table BankCompany (
 	cal_tel varchar(13), -- 콜센터전화번호
 	area_cd int, -- 지역구분 | 01~17	
 	area_nm varchar(2), -- 지역이름 | 서울, 부산, 대구, 인천, 광주, 대전, 울산, 세종, 경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남, 제주
-	exis_yn char(1) -- 점포소재여부
+	exis_yn char(1), -- 점포소재여부
+    logo_url varchar(200) -- 로고 이미지 url
 );
+select * from bankcompany;
+
+UPDATE bankcompany SET logo_url='https://simg.wooribank.com/img/intro/header/h1_01.png' WHERE kor_co_nm = '우리은행';
+UPDATE bankcompany SET logo_url='https://www.dgb.co.kr/img/common/main/ebz_top_dgb_logo_up.png' WHERE kor_co_nm = '대구은행';
+UPDATE bankcompany SET logo_url='https://www.busanbank.co.kr/resource/img/tit/h1_busanlogo_s.gif' WHERE kor_co_nm = '부산은행';
+UPDATE bankcompany SET logo_url='https://imgs.kjbank.com/resource/img/common/logo.png' WHERE kor_co_nm = '광주은행';
+UPDATE bankcompany SET logo_url='https://www.e-jejubank.com/static/images/main/logo.png' WHERE kor_co_nm = '제주은행';
+UPDATE bankcompany SET logo_url='https://www.jbbank.co.kr/img/common/renew-logo.png' WHERE kor_co_nm = '전북은행';
+UPDATE bankcompany SET logo_url='https://www.knbank.co.kr/resource/img/main/main_logo.png' WHERE kor_co_nm = '경남은행';
+UPDATE bankcompany SET logo_url='https://www.ibk.co.kr/img/navigation/h1_logo_sub.gif' WHERE kor_co_nm = '중소기업은행';
+UPDATE bankcompany SET logo_url='https://oimg1.kbstar.com/img/obiz/2021/kb_logo.png' WHERE kor_co_nm = '국민은행';
+UPDATE bankcompany SET logo_url='https://pds.saramin.co.kr/company/logo/201905/23/pry5ef_o0q6-2rxid6_logo.jpg' WHERE kor_co_nm = '신한은행';
+UPDATE bankcompany SET logo_url='https://banking.nonghyup.com/images/IP/global/logo_new.jpg' WHERE kor_co_nm = '농협은행주식회사';
+UPDATE bankcompany SET logo_url='https://image.kebhana.com/cont/common/img/newmain2021/logo.png' WHERE kor_co_nm = '하나은행';
+UPDATE bankcompany SET logo_url='https://www.kbanknow.com/resource/img/reform/layout/logo_kbank.png' WHERE kor_co_nm like '%케이뱅크%';
+UPDATE bankcompany SET logo_url='https://www.suhyup-bank.com/images/sub_new_main/img_logo.png' WHERE kor_co_nm = '수협은행';
+UPDATE bankcompany SET logo_url='https://play-lh.googleusercontent.com/HTBCHqXZ01RhNVzIDwsA2ARURfzXeHxoWfsmgH92ieCgIG1CuPpJRWqCfJ9KgkwWStko=s128-rw' WHERE kor_co_nm like '%카카오뱅크%';
+UPDATE bankcompany SET logo_url='https://static.toss.im/logos/png/4x/logo-bank.png' WHERE kor_co_nm like '%토스뱅크%';
+
 select * from bankcompany;
 
 -- 금융감독원 정기예금 API
