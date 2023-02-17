@@ -55,6 +55,46 @@ COMMIT;
 
 SELECT * FROM MEMBER;
 
+
+-- --------------------
+-- 계좌 테이블 -----------
+-- --------------------
+-- DROP TABLE ACCOUNT;
+CREATE TABLE ACCOUNT (
+	ANUM INT PRIMARY KEY AUTO_INCREMENT, -- 계좌 일련번호(PK 구별 용)
+	ACCOUNT VARCHAR(20), -- 계좌번호
+    MNO INT, -- 투자 원금 
+	WON INT, -- 보유 자산
+	TOTALACC BIGINT, -- 평가 손익
+	TOTALPROFIT BIGINT, -- 계좌번호
+
+	FOREIGN KEY ACCOUNT(MNO) REFERENCES MEMBER(MNO) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+-- -----------------------
+-- 모의 투자에서 매수 및 매매한 주식 정보
+-- -----------------------
+CREATE TABLE INVESTEDSTOCK (
+	ORDERNUM INT PRIMARY KEY AUTO_INCREMENT, -- 주문번호
+	MNO INT, -- 멤버 일련번호
+	SNO INT, -- 주식 일련번호
+	ANUM INT, -- 계좌 일련번호
+	orderdt DATETIME, -- 날짜
+	stockcode VARCHAR(10), -- 종목코드
+	stockNUM VARCHAR(30), -- 종목명
+	tradestat CHAR(1) CHECK (TRADESTAT IN('B', 'S')), -- 구분(매수'B' OR 매도'S')
+	price INT, -- 가격
+	cnt INT,	-- 수량
+	totalPrice BIGINT, -- 구매하는 총 금액
+    
+    CONSTRAINT FK_IS_MNO FOREIGN KEY INVESTEDSTOCK(MNO) REFERENCES MEMBER(MNO) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_IS_SNO FOREIGN KEY INVESTEDSTOCK(SNO) REFERENCES STOCKPRICE(SNO) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_IS_ANUM FOREIGN KEY INVESTEDSTOCK(ANUM) REFERENCES ACCOUNT_INFO(ANUM) ON UPDATE CASCADE ON DELETE CASCADE 
+);
+
+COMMIT;
+
 -------------------------------------------------
 --------------- Board 관련 테이블 ------------------
 -------------------------------------------------
