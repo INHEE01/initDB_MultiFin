@@ -13,10 +13,10 @@ public class APTDetailController {
 	private APTDetailService aptDetailService = new APTDetailService();
 	// APTDetail 테이블 초기화
 	public void initAPTDetail() {
-		Calendar cal = new GregorianCalendar(2023, 0, 1); // 2023년 1월 1일
+		Calendar cal = new GregorianCalendar(2022, 6, 1); // 2022년 6월 1일
 		Calendar today = Calendar.getInstance();
 		
-		while (true) {
+
 			System.out.println(cal.getTime()); // 현재 날짜
 			// 현재 날짜에 해당하는 데이터 페이지 수 구하기
 			int endPage = APTDetailAPI.getPageNum(cal.getTime());
@@ -33,12 +33,7 @@ public class APTDetailController {
 				}
 			}
 		
-			cal.add(Calendar.DATE, 1);
 			
-			if (cal.after(today) == true) {
-				break;
-			}
-		}
 		
 		
 	}

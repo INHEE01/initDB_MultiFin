@@ -16,7 +16,7 @@ public class RemainDetailController {
 		Calendar cal = new GregorianCalendar(2023, 0, 1); // 2023년 1월 1일
 		Calendar today = Calendar.getInstance();
 		
-		while (true) {
+	
 			System.out.println(cal.getTime()); // 현재 날짜
 			// 현재 날짜에 해당하는 데이터 페이지 수 구하기
 			int endPage = RemainDetailAPI.getPageNum(cal.getTime());
@@ -33,13 +33,9 @@ public class RemainDetailController {
 				}
 			}
 		
-			cal.add(Calendar.DATE, 1);
-			
-			if (cal.after(today) == true) {
-				break;
-			}
+		
 		}	
-	}
+	
 	
 	public static void main(String[] args) {
 		RemainDetailController controller = new RemainDetailController();
