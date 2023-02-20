@@ -13,7 +13,7 @@ public class APTDetailController {
 	private APTDetailService aptDetailService = new APTDetailService();
 	// APTDetail 테이블 초기화
 	public void initAPTDetail() {
-		Calendar cal = new GregorianCalendar(2022, 6, 1); // 2022년 6월 1일
+		Calendar cal = new GregorianCalendar(2022, 0, 1); // 2022년 6월 1일
 		Calendar today = Calendar.getInstance();
 		
 
