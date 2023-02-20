@@ -731,7 +731,7 @@ SELECT * FROM CREDITCARD;
 create table APTDetail(
 	aptDno int primary key auto_increment, -- 일련번호
 	bsns_mby_nm varchar(50), -- 사업주체명 (시행사) 
-	cnstrct_entrps_nm varchar(30), -- 건설업체명 (시공사)  
+	cnstrct_entrps_nm varchar(50), -- 건설업체명 (시공사)  
 	cntrct_cncls_bgnde varchar(13),	-- 계약시작일
 	cntrct_cncls_endde varchar(13),	-- 계약종료일
 	gnrl_rnk1_crsparea_rcept_pd varchar(50),	-- 1순위 접수일 해당지역

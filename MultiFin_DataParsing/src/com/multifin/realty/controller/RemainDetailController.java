@@ -13,7 +13,7 @@ public class RemainDetailController {
 	private RemainDetailService remainDetailService = new RemainDetailService();
 
 	public void initRemainDetail() {
-		Calendar cal = new GregorianCalendar(2022, 0, 1); // 2023년 1월 1일
+		Calendar cal = new GregorianCalendar(2022, 10, 1); // 2022년 11월 1일
 		Calendar today = Calendar.getInstance();
 		
 	

@@ -12,7 +12,7 @@ public class OfficeDetailController {
 	private OfficeDetailService officeDetailService = new OfficeDetailService();
 	// OfficeDetail 테이블 초기화
 	public void initOfficeDetail() {
-		Calendar cal = new GregorianCalendar(2022, 0, 1); // 2022년 6월 1일
+		Calendar cal = new GregorianCalendar(2022, 10, 1); // 2022년 11월 1일
 		Calendar today = Calendar.getInstance();
 		
 	
