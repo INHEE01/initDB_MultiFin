@@ -903,7 +903,7 @@ create table RemainDetail (
 	hmpg_adres varchar(255), -- 홈페이지주소
 	house_manage_no int, -- 주택관리번호
 	house_dtl_secd_nm varchar(5), -- 주택상세구분코드명
-	house_nm varchar(50), -- 주택명
+	house_nm varchar(100), -- 주택명
 	house_secd_nm varchar(10), -- 주택구분코드명
 	hssply_adres varchar(255), -- 공급위치
 	hssply_zip varchar(5), -- 공급위치 우편번호
